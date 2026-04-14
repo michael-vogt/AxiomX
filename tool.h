@@ -1,0 +1,18 @@
+#ifndef TOOL_H
+#define TOOL_H
+
+namespace View {
+namespace Tools {
+class Tool;
+}
+}
+
+class Tool {
+public:
+    virtual void mousePress(const QPointF& pos) = 0;
+    virtual void mouseMove(const QPointF& pos) {}
+    virtual void mouseRelease(const QPointF& pos) {}
+    virtual ~Tool() {}
+};
+
+#endif // TOOL_H
