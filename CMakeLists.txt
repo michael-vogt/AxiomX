@@ -16,7 +16,7 @@ set(TS_FILES AxiomX_de_DE.ts)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
+
         mainwindow.h
         mainwindow.ui
         ${TS_FILES}

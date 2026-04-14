@@ -56,6 +56,10 @@ public:
         return nullptr;
     }
 
+    QGraphicsScene* getScene() {
+        return scene;
+    }
+
 };
 
 #endif // SCENECONTROLLER_H

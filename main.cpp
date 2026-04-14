@@ -32,51 +32,30 @@ int main(int argc, char *argv[])
 
 #include "core.h"
 #include "view.h"
+#include "mainwindow.h"
 
 // ---------------- MAIN ----------------
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QGraphicsScene scene;
-    scene.setSceneRect(0, 0, 800, 600);
+    QGraphicsScene* scene = new QGraphicsScene();
+    scene->setSceneRect(0, 0, 800, 600);
 
-    SceneController controller(&scene);
+    SceneController controller(scene);
 
-    GeoView view(&scene);
-    view.setRenderHint(QPainter::Antialiasing);
+    //GeoView view(&scene);
+    //view.setRenderHint(QPainter::Antialiasing);
 
     PointTool pointTool(&controller);
     LineTool lineTool(&controller);
     MoveTool moveTool(&controller);
 
-    view.setTool(&lineTool);
-    view.show();
+    MainWindow window(&controller, &pointTool, &lineTool, &moveTool);
+    window.show();
 
-
-    // Modell erstellen
-    /*Point* p1 = new Point(100, 100);
-    Point* p2 = new Point(300, 300);
-    Line* line = new Line(p1, p2);
-
-    // View erstellen
-    GraphicsPoint* gp1 = new GraphicsPoint(p1);
-    GraphicsPoint* gp2 = new GraphicsPoint(p2);
-    GraphicsLine* gl  = new GraphicsLine(line);
-
-    scene.addItem(gl);
-    scene.addItem(gp1);
-    scene.addItem(gp2);
-
-    gp1->attach();
-    gp2->attach();
-    gl->attach();
-
-    QGraphicsView view(&scene);
-    view.setRenderHint(QPainter::Antialiasing);
-    view.setWindowTitle("AxiomX");
-    view.resize(420, 420);
-    view.show();*/
+    //view.setTool(&lineTool);
+    //view.show();
 
     return app.exec();
 }
