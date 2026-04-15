@@ -9,22 +9,22 @@ class Point;
 
 class Point : public GeoObject {
 protected:
-    double x, y;
+    double m_x, m_y;
 
 public:
-    Point(double x, double y) : x(x), y(y) {}
+    Point(double x, double y) : m_x(x), m_y(y) {}
 
-    double getX() {
-        return x;
+    double x() {
+        return m_x;
     }
 
-    double getY() {
-        return y;
+    double y() {
+        return m_y;
     }
 
     void set(double nx, double ny) {
-        x = nx;
-        y = ny;
+        m_x = nx;
+        m_y = ny;
         notify();
     }
 

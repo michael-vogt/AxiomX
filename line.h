@@ -10,48 +10,48 @@ class Line;
 class Line : public GeoObject
 {
 protected:
-    Point* p1;
-    Point* p2;
+    Point* m_p1;
+    Point* m_p2;
 
     // cached for view
-    double x1, x2, y1, y2;
+    double m_x1, m_x2, m_y1, m_y2;
 
 public:
-    Line(Point* a, Point* b) : p1(a), p2(b) {
-        p1->addDependent(this);
-        p2->addDependent(this);
+    Line(Point* a, Point* b) : m_p1(a), m_p2(b) {
+        m_p1->addDependent(this);
+        m_p2->addDependent(this);
         update();
     }
 
-    Point* getP1() {
-        return p1;
+    Point* p1() {
+        return m_p1;
     }
 
-    Point* getP2() {
-        return p2;
+    Point* p2() {
+        return m_p2;
     }
 
-    double getX1() {
-        return x1;
+    double x1() {
+        return m_x1;
     }
 
-    double getX2() {
-        return x2;
+    double x2() {
+        return m_x2;
     }
 
-    double getY1() {
-        return y1;
+    double y1() {
+        return m_y1;
     }
 
-    double getY2() {
-        return y2;
+    double y2() {
+        return m_y2;
     }
 
     void update() override {
-        x1 = p1->getX();
-        y1 = p1->getY();
-        x2 = p2->getX();
-        y2 = p2->getY();
+        m_x1 = m_p1->x();
+        m_y1 = m_p1->y();
+        m_x2 = m_p2->x();
+        m_y2 = m_p2->y();
     }
 
 };

@@ -43,15 +43,17 @@ int main(int argc, char *argv[])
     scene->setSceneRect(0, 0, 800, 600);
 
     SceneController controller(scene);
+    InteractionManager interaction(&controller);
 
     //GeoView view(&scene);
     //view.setRenderHint(QPainter::Antialiasing);
 
-    PointTool pointTool(&controller);
-    LineTool lineTool(&controller);
+    /*PointTool pointTool(&controller);
+    LineTool lineTool(&controller, &interaction, scene);
     MoveTool moveTool(&controller);
 
-    MainWindow window(&controller, &pointTool, &lineTool, &moveTool);
+    MainWindow window(&controller, &pointTool, &lineTool, &moveTool);*/
+    MainWindow window(&controller, &interaction);
     window.show();
 
     //view.setTool(&lineTool);

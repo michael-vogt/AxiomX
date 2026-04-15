@@ -13,24 +13,26 @@ class MoveTool;
 
 class MoveTool : public Tool {
 private:
-    SceneController* ctrl;
-    Point* selected = nullptr;
+    SceneController* m_ctrl;
+    Point* m_selected = nullptr;
 
 public:
-    MoveTool(SceneController* c) : ctrl(c) {}
+    MoveTool(SceneController* c) : m_ctrl(c) {}
+
+    void resetTool() override {}
 
     void mousePress(const QPointF &pos) override {
-        selected = ctrl->findPointNear(pos);
+        m_selected = m_ctrl->findPointNear(pos);
     }
 
     void mouseMove(const QPointF &pos) override {
-        if (selected) {
-            selected->set(pos.x(), pos.y());
+        if (m_selected) {
+            m_selected->set(pos.x(), pos.y());
         }
     }
 
     void mouseRelease(const QPointF &pos) override {
-        selected = nullptr;
+        m_selected = nullptr;
     }
 };
 

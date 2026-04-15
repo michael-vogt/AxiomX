@@ -9,6 +9,7 @@ class Tool;
 
 class Tool {
 public:
+    virtual void resetTool() = 0;
     virtual void mousePress(const QPointF& pos) = 0;
     virtual void mouseMove(const QPointF& pos) {}
     virtual void mouseRelease(const QPointF& pos) {}

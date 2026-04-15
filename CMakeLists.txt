@@ -37,13 +37,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         observer.h
         graphicsobject.h
-        geoscene.h
+
         tool.h
         pointtool.h
         linetool.h
         geoview.h
         scenecontroller.h
         movetool.h
+        interactionmanager.h
 
     )
 # Define target properties for Android with Qt 6 as:

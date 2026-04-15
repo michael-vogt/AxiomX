@@ -11,24 +11,24 @@ class GraphicsLine;
 
 class GraphicsLine : public QGraphicsLineItem, public GraphicsObject {
 private:
-    Line* model;
+    Line* m_model;
 
 public:
-    GraphicsLine(Line* l) : model(l) {
+    GraphicsLine(Line* l) : m_model(l) {
         setPen(QPen(Qt::black, 2));
     }
 
     void attach() override {
-        model->addObserver(this);
+        m_model->addObserver(this);
         sync();
     }
 
-    Line* getModel() override {
-        return model;
+    Line* model() override {
+        return m_model;
     }
 
     void sync() {
-        setLine(model->getX1(), model->getY1(), model->getX2(), model->getY2());
+        setLine(m_model->x1(), m_model->y1(), m_model->x2(), m_model->y2());
     }
 };
 

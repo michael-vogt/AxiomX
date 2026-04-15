@@ -23,7 +23,7 @@ public:
             d->notify();
         }
 
-        // 2. Notify views
+        // 2. Notify view
         for (auto obs : observers) {
             obs->sync();
         }

@@ -28,18 +28,23 @@ private:
 
 class MainWindow : public QMainWindow {
 public:
-    GeoView* view;
+    GeoView* m_view;
 
-    MainWindow(SceneController* controller,
+    MainWindow(SceneController* controller, InteractionManager* interaction) /*,
                PointTool* pointTool,
                LineTool* lineTool,
-               MoveTool* moveTool)
+               MoveTool* moveTool)*/
     {
         // Scene + View
-        QGraphicsScene* scene = controller->getScene();
-        view = new GeoView(scene);
-        view->setRenderHint(QPainter::Antialiasing);
-        setCentralWidget(view);
+        QGraphicsScene* scene = controller->scene();
+        m_view = new GeoView(scene);
+        m_view->setRenderHint(QPainter::Antialiasing);
+        m_view->setInteractionManager(interaction);
+        setCentralWidget(m_view);
+
+        PointTool* pointTool = new PointTool(controller);
+        LineTool* lineTool = new LineTool(controller, interaction, scene);
+        MoveTool* moveTool = new MoveTool(controller);
 
         // Toolbar
         QToolBar* toolbar = addToolBar("Tools");
@@ -66,19 +71,19 @@ public:
 
         // Default Tool
         moveAction->setChecked(true);
-        view->setTool(moveTool);
+        m_view->setTool(moveTool);
 
         // 🔥 Verbindungen
         connect(moveAction, &QAction::triggered, [=]() {
-            view->setTool(moveTool);
+            m_view->setTool(moveTool);
         });
 
         connect(pointAction, &QAction::triggered, [=]() {
-            view->setTool(pointTool);
+            m_view->setTool(pointTool);
         });
 
         connect(lineAction, &QAction::triggered, [=]() {
-            view->setTool(lineTool);
+            m_view->setTool(lineTool);
         });
 
         setWindowTitle("AxiomX");

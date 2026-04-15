@@ -16,20 +16,20 @@ class SceneController;
 
 class SceneController {
 private:
-    QGraphicsScene* scene;
-    std::vector<GraphicsObject*> graphics;
+    QGraphicsScene* m_scene;
+    std::vector<GraphicsObject*> m_graphics;
 
 public:
-    SceneController(QGraphicsScene* s) : scene(s) {}
+    SceneController(QGraphicsScene* s) : m_scene(s) {}
 
     Point* createPoint(double x, double y) {
         Point* p = new Point(x, y);
         auto gp = new GraphicsPoint(p);
 
-        scene->addItem(gp);
+        m_scene->addItem(gp);
         gp->attach();
 
-        graphics.push_back(gp);
+        m_graphics.push_back(gp);
         return p;
     }
 
@@ -37,27 +37,31 @@ public:
         Line* l = new Line(a, b);
         auto gl = new GraphicsLine(l);
 
-        scene->addItem(gl);
+        m_scene->addItem(gl);
         gl->attach();
 
-        graphics.push_back(gl);
+        m_graphics.push_back(gl);
         return l;
     }
 
     Point* findPointNear(const QPointF& pos, double radius = 10.0) {
-        for (auto g : graphics) {
+        for (auto g : m_graphics) {
             auto gp = dynamic_cast<GraphicsPoint*>(g);
             if (!gp) continue;
 
             QPointF p = gp->pos();
             if (QLineF(p, pos).length() < radius)
-                return gp->getModel();
+                return gp->model();
         }
         return nullptr;
     }
 
-    QGraphicsScene* getScene() {
-        return scene;
+    std::vector<GraphicsObject*> graphics() {
+        return m_graphics;
+    }
+
+    QGraphicsScene* scene() {
+        return m_scene;
     }
 
 };

@@ -12,13 +12,15 @@ class PointTool;
 
 class PointTool : public Tool {
 private:
-    SceneController* ctrl;
+    SceneController* m_ctrl;
 
 public:
-    PointTool(SceneController* c) : ctrl(c) {}
+    PointTool(SceneController* c) : m_ctrl(c) {}
+
+    void resetTool() override {}
 
     void mousePress(const QPointF &pos) override {
-        ctrl->createPoint(pos.x(), pos.y());
+        m_ctrl->createPoint(pos.x(), pos.y());
     }
 };
 
