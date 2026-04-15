@@ -3,10 +3,6 @@
 
 #include "geoobject.h"
 
-namespace Core {
-class Point;
-}
-
 class Point : public GeoObject {
 protected:
     double m_x, m_y;

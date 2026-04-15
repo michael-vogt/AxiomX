@@ -1,7 +1,8 @@
 #ifndef INTERACTIONMANAGER_H
 #define INTERACTIONMANAGER_H
 
-#include "view.h"
+#include "../view/view.h"
+#include "scenecontroller.h"
 
 class InteractionManager {
 public:

@@ -3,13 +3,9 @@
 
 #include <QEvent>
 #include <QGraphicsEllipseItem>
-#include "point.h"
+#include "../core/core.h"
 #include "observer.h"
 #include "graphicsobject.h"
-
-namespace View {
-class GraphicsPoint;
-}
 
 class GraphicsPoint : public QGraphicsEllipseItem, public GraphicsObject {
 private:

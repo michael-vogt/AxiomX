@@ -3,12 +3,8 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
-#include "tool.h"
-#include "interactionmanager.h"
-
-namespace View {
-class GeoView;
-}
+#include "../tools/tools.h"
+#include "../control/interactionmanager.h"
 
 class GeoView : public QGraphicsView {
 private:

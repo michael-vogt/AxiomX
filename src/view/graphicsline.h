@@ -2,12 +2,8 @@
 #define GRAPHICSLINE_H
 
 #include <QGraphicsLineItem>
-#include "line.h"
+#include "../core/core.h"
 #include "graphicsobject.h"
-
-namespace View {
-class GraphicsLine;
-}
 
 class GraphicsLine : public QGraphicsLineItem, public GraphicsObject {
 private:

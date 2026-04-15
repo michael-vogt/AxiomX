@@ -3,14 +3,8 @@
 
 #include <iostream>
 #include "tool.h"
-#include "view.h"
-#include "interactionmanager.h"
-
-namespace View {
-namespace Tools {
-class LineTool;
-}
-}
+#include "../control/interactionmanager.h"
+#include "../control/scenecontroller.h"
 
 class LineTool : public Tool {
 private:

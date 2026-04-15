@@ -1,11 +1,8 @@
 #ifndef LINE_H
 #define LINE_H
 
-namespace Core {
-class Line;
-}
-
 #include "geoobject.h"
+#include "point.h"
 
 class Line : public GeoObject
 {

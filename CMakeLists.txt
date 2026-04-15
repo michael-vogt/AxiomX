@@ -9,50 +9,29 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
-
-set(TS_FILES AxiomX_de_DE.ts)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
 
-        mainwindow.h
-        mainwindow.ui
-        ${TS_FILES}
+
+
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(AxiomX
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        geoobject.h
-        point.h
-        line.h
-        circle.h
-        graphicspoint.h
-        graphicsline.h
-        core.h
-        view.h
-
-        observer.h
-        graphicsobject.h
-
-        tool.h
-        pointtool.h
-        linetool.h
-        geoview.h
-        scenecontroller.h
-        movetool.h
-        interactionmanager.h
-
+        src/core/circle.h src/core/core.h src/core/geoobject.h src/core/line.h src/core/point.h src/tools/linetool.h src/tools/movetool.h src/tools/pointtool.h src/tools/tool.h src/view/geoview.h src/view/graphicsline.h src/view/graphicsobject.h src/view/graphicspoint.h src/view/observer.h src/view/view.h src/main.cpp src/mainwindow.h src/mainwindow.ui
+        src/tools/tools.h
+        src/control/interactionmanager.h src/control/scenecontroller.h
+        src/control/interactionmanager.h src/control/scenecontroller.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET AxiomX APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     if(ANDROID)
         add_library(AxiomX SHARED
@@ -65,8 +44,6 @@ else()
             ${PROJECT_SOURCES}
         )
     endif()
-
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
 target_link_libraries(AxiomX PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

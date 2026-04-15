@@ -2,13 +2,7 @@
 #define POINTTOOL_H
 
 #include "tool.h"
-#include "view.h"
-
-namespace View {
-namespace Tools {
-class PointTool;
-}
-}
+#include "../control/scenecontroller.h"
 
 class PointTool : public Tool {
 private:

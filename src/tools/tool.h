@@ -1,12 +1,6 @@
 #ifndef TOOL_H
 #define TOOL_H
 
-namespace View {
-namespace Tools {
-class Tool;
-}
-}
-
 class Tool {
 public:
     virtual void resetTool() = 0;

@@ -2,11 +2,7 @@
 #define GEOOBJECT_H
 
 #include <vector>
-#include "observer.h"
-
-namespace Core {
-class GeoObject;
-}
+#include "../view/observer.h"
 
 class GeoObject {
 protected:

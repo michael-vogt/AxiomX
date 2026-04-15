@@ -3,16 +3,10 @@
 
 #include <QGraphicsScene>
 #include <vector>
-#include "core.h"
-#include "view.h"
-
-#include "graphicsobject.h"
-#include "graphicspoint.h"
-#include "graphicsline.h"
-
-namespace View {
-class SceneController;
-}
+#include "../core/core.h"
+#include "../view/graphicsobject.h"
+#include "../view/graphicspoint.h"
+#include "../view/graphicsline.h"
 
 class SceneController {
 private:

@@ -2,10 +2,7 @@
 #define CIRCLE_H
 
 #include "geoobject.h"
-
-namespace Core {
-class Circle;
-}
+#include "point.h"
 
 class Circle : public GeoObject {
 protected:

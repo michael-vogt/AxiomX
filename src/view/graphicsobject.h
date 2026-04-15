@@ -1,12 +1,8 @@
 #ifndef GRAPHICSOBJECT_H
 #define GRAPHICSOBJECT_H
 
+#include "../core/core.h"
 #include "observer.h"
-#include "geoobject.h"
-
-namespace View {
-class GraphicsObject;
-}
 
 class GraphicsObject : public Observer {
 public:

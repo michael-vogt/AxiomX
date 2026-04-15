@@ -2,14 +2,7 @@
 #define MOVETOOL_H
 
 #include "tool.h"
-//#include "view.h"
-#include "scenecontroller.h"
-
-namespace View {
-namespace Tools {
-class MoveTool;
-}
-}
+#include "../control/scenecontroller.h"
 
 class MoveTool : public Tool {
 private:

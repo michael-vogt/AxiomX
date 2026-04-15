@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
 #include <QGraphicsSceneMouseEvent>
 #include <QTimer>
 
-#include "core.h"
-#include "view.h"
+#include "core/core.h"
+#include "view/view.h"
 #include "mainwindow.h"
 
 // ---------------- MAIN ----------------

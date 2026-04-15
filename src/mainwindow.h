@@ -24,7 +24,7 @@ private:
 #include <QMainWindow>
 #include <QToolBar>
 #include <QActionGroup>
-#include "view.h"
+#include "view/view.h"
 
 class MainWindow : public QMainWindow {
 public:
