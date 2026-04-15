@@ -5,5 +5,6 @@
 #include "linetool.h"
 #include "movetool.h"
 #include "pointtool.h"
+#include "selecttool.h"
 
 #endif // TOOLS_H

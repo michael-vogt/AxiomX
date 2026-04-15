@@ -10,7 +10,7 @@ protected:
     std::vector<Observer*> observers;
 
 public:
-    virtual void update() = 0;
+    virtual void update() {}
 
     void notify() {
         // 1. Update model

@@ -2,9 +2,7 @@
 #define LINETOOL_H
 
 #include <iostream>
-#include "tool.h"
-#include "../control/interactionmanager.h"
-#include "../control/scenecontroller.h"
+//#include "../control/interactionmanager.h"
 
 class LineTool : public Tool {
 private:

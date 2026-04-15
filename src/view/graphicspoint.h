@@ -10,11 +10,23 @@
 class GraphicsPoint : public QGraphicsEllipseItem, public GraphicsObject {
 private:
     Point* m_model;
-    bool m_highlighted = false;
+    bool m_hovered = false;
     bool m_updating = false;
+    bool m_selected = false;
 
     QColor m_normalColor = Qt::blue;
     QColor m_hoverColor = QColor(255, 140, 0);
+    QColor m_selectColor = Qt::red;
+
+    void updateVisual() {
+        if (m_selected) {
+            setBrush(m_selectColor);
+        } else if (m_hovered) {
+            setBrush(m_hoverColor);
+        } else {
+            setBrush(m_normalColor);
+        }
+    }
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override {
@@ -27,18 +39,18 @@ protected:
 
 public:
     GraphicsPoint(Point* p) : QGraphicsEllipseItem(-5, -5, 10, 10), m_model(p) {
-        setBrush(m_normalColor);
         setZValue(1);
+        updateVisual();
     }
 
-    void setHighlighted(bool h) {
-        m_highlighted = h;
+    void setHovered(bool h) {
+        m_hovered = h;
+        updateVisual();
+    }
 
-        if (h) {
-            setBrush(m_hoverColor);
-        } else {
-            setBrush(m_normalColor);
-        }
+    void setSelectedVisual(bool s) override {
+        m_selected = s;
+        updateVisual();
     }
 
     void attach() override {

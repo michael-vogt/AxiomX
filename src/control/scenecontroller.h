@@ -38,6 +38,24 @@ public:
         return l;
     }
 
+    GraphicsObject* findObjectAt(const QPointF& pos, double radius = 10.0) {
+        for (auto g : m_graphics) {
+            auto gp = dynamic_cast<GraphicsPoint*>(g);
+            if (gp && QLineF(gp->pos(), pos).length() < radius) {
+                return gp;
+            }
+        }
+
+        for (auto g : m_graphics) {
+            auto gl = dynamic_cast<GraphicsLine*>(g);
+            if (gl && gl->model()->distanceToPoint(pos) < radius) {
+                return gl;
+            }
+        }
+
+        return nullptr;
+    }
+
     Point* findPointNear(const QPointF& pos, double radius = 10.0) {
         for (auto g : m_graphics) {
             auto gp = dynamic_cast<GraphicsPoint*>(g);

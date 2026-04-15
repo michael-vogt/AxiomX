@@ -30,8 +30,10 @@ int main(int argc, char *argv[])
 #include <QGraphicsSceneMouseEvent>
 #include <QTimer>
 
+/*#include "control/control.h"
 #include "core/core.h"
-#include "view/view.h"
+#include "view/view.h"*/
+#include "allincludes.h"
 #include "mainwindow.h"
 
 // ---------------- MAIN ----------------
@@ -44,20 +46,11 @@ int main(int argc, char *argv[])
 
     SceneController controller(scene);
     InteractionManager interaction(&controller);
+    SelectionManager selection;
 
-    //GeoView view(&scene);
-    //view.setRenderHint(QPainter::Antialiasing);
 
-    /*PointTool pointTool(&controller);
-    LineTool lineTool(&controller, &interaction, scene);
-    MoveTool moveTool(&controller);
-
-    MainWindow window(&controller, &pointTool, &lineTool, &moveTool);*/
-    MainWindow window(&controller, &interaction);
+    MainWindow window(&controller, &interaction, &selection);
     window.show();
-
-    //view.setTool(&lineTool);
-    //view.show();
 
     return app.exec();
 }

@@ -1,8 +1,10 @@
 #ifndef LINE_H
 #define LINE_H
 
+#include <QPointF>
 #include "geoobject.h"
 #include "point.h"
+#include "utility.h"
 
 class Line : public GeoObject
 {
@@ -49,6 +51,23 @@ public:
         m_y1 = m_p1->y();
         m_x2 = m_p2->x();
         m_y2 = m_p2->y();
+    }
+
+    double distanceToPoint(const QPointF& pos) {
+        /*double x0 = pos.x();
+        double y0 = pos.y();
+
+        double dX2X1 = m_x2 - m_x1;
+        double dY1Y0 = m_y1 - y0;
+        double dX1X0 = m_x1 - x0;
+        double dY2Y1 = m_y2 - m_y1;
+        double numerator = std::abs(dX2X1 * dY1Y0 - dX1X0 * dY2Y1);
+        double denominator = std::sqrt(dX2X1 * dX2X1 + dY2Y1 * dY2Y1);
+
+        return numerator / denominator;*/
+        QPointF a(m_p1->x(), m_p1->y());
+        QPointF b(m_p2->x(), m_p2->y());
+        return distancePointToSegment(pos, a, b);
     }
 
 };
