@@ -18,7 +18,7 @@ public:
 
     void execute() override {
         m_line = new Line(m_a->model(), m_b->model());
-        m_gline = new GraphicsLine(m_line);
+        m_gline = new GraphicsLine(m_line, m_ctrl->scene());
 
         m_ctrl->scene()->addItem(m_gline);
         m_gline->attach();

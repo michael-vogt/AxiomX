@@ -31,8 +31,10 @@ protected:
         if (event->modifiers() & Qt::ControlModifier) {
             if (event->key() == Qt::Key_Z) {
                 m_commandManager->undo();
+                this->scene()->update();
             } else if (event->key() == Qt::Key_Y) {
                 m_commandManager->redo();
+                this->scene()->update();
             }
         }
 
