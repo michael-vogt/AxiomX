@@ -18,4 +18,11 @@
 #include "./tools/linetool.h"
 #include "./view/geoview.h"
 
+#include "./command/command.h"
+#include "./command/commandmanager.h"
+#include "./command/createlinecommand.h"
+#include "./command/createpointcommand.h"
+#include "./command/movepointcommand.h"
+#include "./command/resultcommand.h"
+
 #endif // ALLINCLUDES_H

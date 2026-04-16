@@ -16,6 +16,11 @@ private:
 public:
     SceneController(QGraphicsScene* s) : m_scene(s) {}
 
+    void remove(GraphicsObject* g) {
+        m_scene->removeItem(dynamic_cast<QGraphicsItem*>(g));
+        m_graphics.erase(std::remove(m_graphics.begin(), m_graphics.end(), g), m_graphics.end());
+    }
+
     Point* createPoint(double x, double y) {
         Point* p = new Point(x, y);
         auto gp = new GraphicsPoint(p);

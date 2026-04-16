@@ -32,6 +32,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/control/control.h
         src/allincludes.h
         src/core/utility.h
+        src/command/command.h
+        src/command/commandmanager.h
+        src/command/createpointcommand.h
+        src/command/createlinecommand.h
+        src/command/movepointcommand.h
+        src/command/resultcommand.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET AxiomX APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

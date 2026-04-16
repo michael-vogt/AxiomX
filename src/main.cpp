@@ -47,9 +47,10 @@ int main(int argc, char *argv[])
     SceneController controller(scene);
     InteractionManager interaction(&controller);
     SelectionManager selection;
+    CommandManager commandManager;
 
 
-    MainWindow window(&controller, &interaction, &selection);
+    MainWindow window(&controller, &interaction, &selection, &commandManager);
     window.show();
 
     return app.exec();

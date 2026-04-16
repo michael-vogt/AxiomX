@@ -10,9 +10,10 @@ class GeoView : public QGraphicsView {
 private:
     Tool* m_tool = nullptr;
     InteractionManager* m_interaction = nullptr;
+    CommandManager* m_commandManager = nullptr;
 
 public:
-    GeoView(QGraphicsScene* s) : QGraphicsView(s) {
+    GeoView(QGraphicsScene* s, CommandManager* cmd) : QGraphicsView(s), m_commandManager(cmd) {
         setMouseTracking(true);
         viewport()->setMouseTracking(true);
     }
@@ -27,6 +28,14 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent* event) override {
+        if (event->modifiers() & Qt::ControlModifier) {
+            if (event->key() == Qt::Key_Z) {
+                m_commandManager->undo();
+            } else if (event->key() == Qt::Key_Y) {
+                m_commandManager->redo();
+            }
+        }
+
         if (event->key() == Qt::Key_Escape && m_tool) {
             m_tool->resetTool();
         }
