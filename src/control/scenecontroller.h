@@ -23,7 +23,7 @@ public:
 
     Point* createPoint(double x, double y) {
         Point* p = new Point(x, y);
-        auto gp = new GraphicsPoint(p);
+        auto gp = new GraphicsPoint(p, m_scene);
 
         m_scene->addItem(gp);
         gp->attach();
@@ -34,7 +34,7 @@ public:
 
     Line* createLine(Point* a, Point* b) {
         Line* l = new Line(a, b);
-        auto gl = new GraphicsLine(l);
+        auto gl = new GraphicsLine(l, m_scene);
 
         m_scene->addItem(gl);
         gl->attach();

@@ -93,6 +93,8 @@ public:
             m_rect = nullptr;
         }
 
+        m_scene->update();
+
     }
 
     void resetTool() override {}

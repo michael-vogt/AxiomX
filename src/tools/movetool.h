@@ -21,6 +21,7 @@ public:
     void mouseMove(const QPointF &pos) override {
         if (m_selected) {
             m_selected->set(pos.x(), pos.y());
+            m_ctrl->scene()->update();
         }
     }
 

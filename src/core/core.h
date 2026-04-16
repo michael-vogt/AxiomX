@@ -5,5 +5,6 @@
 #include "geoobject.h"
 #include "line.h"
 #include "point.h"
+#include "infinitelineitem.h"
 
 #endif // CORE_H

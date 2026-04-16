@@ -16,7 +16,7 @@ private:
     CommandManager* m_command;
 
     Point* m_first = nullptr;
-    QGraphicsLineItem* m_preview = nullptr;
+    InfiniteLineItem* m_preview = nullptr;
 
 public:
     LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm) : m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
@@ -46,9 +46,12 @@ public:
             QPen pen(Qt::DashLine);
             pen.setColor(Qt::gray);
             pen.setWidth(2);
-            m_preview = m_scene->addLine(QLineF(pos, pos), pen);
+
+            m_preview = new InfiniteLineItem();
+            m_preview->setLine(QLineF(pos, pos));
+            m_preview->setPen(pen);
+            m_scene->addItem(m_preview); //m_scene->addLine(QLineF(pos, pos), pen);
         } else {
-            //m_ctrl->createLine(m_first, p);
             m_command->execute(new CreateLineCommand(m_ctrl, m_first, p));
 
             if (m_preview) {
@@ -58,6 +61,7 @@ public:
             }
 
             m_first = nullptr;
+            m_scene->update();
         }
     }
 
@@ -71,6 +75,7 @@ public:
         }
 
         m_preview->setLine(QLineF(QPointF(m_first->x(), m_first->y()), target));
+        m_scene->update();
     }
 
     void mouseRelease(const QPointF&) override {}

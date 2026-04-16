@@ -18,7 +18,7 @@ public:
     void execute() override {
         if (!m_point) {
             m_point = new Point(m_x, m_y);
-            m_gpoint = new GraphicsPoint(m_point);
+            m_gpoint = new GraphicsPoint(m_point, m_ctrl->scene());
         }
 
         m_ctrl->scene()->addItem(m_gpoint);
