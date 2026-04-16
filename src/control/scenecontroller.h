@@ -73,7 +73,7 @@ public:
         return nullptr;
     }
 
-    std::vector<GraphicsObject*> graphics() {
+    std::vector<GraphicsObject*>& graphics() {
         return m_graphics;
     }
 
