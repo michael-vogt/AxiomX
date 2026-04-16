@@ -15,7 +15,7 @@ private:
     QGraphicsScene* m_scene;
     CommandManager* m_command;
 
-    Point* m_first = nullptr;
+    GraphicsPoint* m_first = nullptr;
     InfiniteLineItem* m_preview = nullptr;
 
 public:
@@ -28,16 +28,18 @@ public:
             m_preview = nullptr;
         }
 
-        m_first = nullptr;
+        if (m_first) {
+            m_scene->removeItem(m_first);
+            m_first = nullptr;
+        }
     }
 
     void mousePress(const QPointF &pos) override {
-        Point* p = m_interaction->getSnappedPoint(pos); // ctrl->findPointNear(pos);
+        GraphicsPoint* p = m_interaction->getSnappedPoint(pos);
         if (!p) {
-            //p = m_ctrl->createPoint(pos.x(), pos.y());
             auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y());
             m_command->execute(cmd);
-            p = cmd->getResult();
+            p = cmd->getResultGraphicsObject();
         }
 
         if (!m_first) {
@@ -69,12 +71,12 @@ public:
         if (!m_first || !m_preview) return;
 
         QPointF target = pos;
-        Point* snap = m_interaction->getSnappedPoint(pos); // ctrl->findPointNear(pos);
+        GraphicsPoint* snap = m_interaction->getSnappedPoint(pos);
         if (snap) {
-            target = QPointF(snap->x(), snap->y());
+            target = QPointF(snap->model()->x(), snap->model()->y());
         }
 
-        m_preview->setLine(QLineF(QPointF(m_first->x(), m_first->y()), target));
+        m_preview->setLine(QLineF(QPointF(m_first->model()->x(), m_first->model()->y()), target));
         m_scene->update();
     }
 

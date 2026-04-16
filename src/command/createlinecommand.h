@@ -4,21 +4,21 @@
 #include "resultcommand.h"
 #include "../control/scenecontroller.h"
 
-class CreateLineCommand : public ResultCommand<Line*> {
+class CreateLineCommand : public ResultCommand<Line*, GraphicsLine*> {
 public:
     SceneController* m_ctrl;
-    Point* m_a;
-    Point* m_b;
+    GraphicsPoint* m_a;
+    GraphicsPoint* m_b;
 
     Line* m_line = nullptr;
     GraphicsLine* m_gline = nullptr;
 
-    CreateLineCommand(SceneController* c, Point* a, Point* b)
+    CreateLineCommand(SceneController* c, GraphicsPoint* a, GraphicsPoint* b)
         : m_ctrl(c), m_a(a), m_b(b) {}
 
     void execute() override {
-        m_line = new Line(m_a, m_b);
-        m_gline = new GraphicsLine(m_line, m_ctrl->scene());
+        m_line = new Line(m_a->model(), m_b->model());
+        m_gline = new GraphicsLine(m_line);
 
         m_ctrl->scene()->addItem(m_gline);
         m_gline->attach();
@@ -34,6 +34,10 @@ public:
 
     Line* getResult() override {
         return m_line;
+    }
+
+    GraphicsLine* getResultGraphicsObject() override {
+        return m_gline;
     }
 };
 

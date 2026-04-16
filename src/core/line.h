@@ -5,9 +5,9 @@
 #include "geoobject.h"
 #include "point.h"
 #include "utility.h"
+//#include "../view/graphicspoint.h"
 
-class Line : public GeoObject
-{
+class Line : public GeoObject {
 protected:
     Point* m_p1;
     Point* m_p2;
