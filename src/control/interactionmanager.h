@@ -55,7 +55,7 @@ public:
         }
     }
 
-    Point* getSnappedPoint(const QPointF& pos) {
+    GraphicsPoint* getSnappedPoint(const QPointF& pos) {
         m_snappedPoint = nullptr;
 
         for (auto g : m_ctrl->graphics()) {
@@ -64,7 +64,7 @@ public:
 
             if (QLineF(gp->pos(), pos).length() < 10.0) {
                 m_snappedPoint = gp;
-                return gp->model();
+                return gp;
             }
         }
         return nullptr;

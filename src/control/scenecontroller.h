@@ -21,7 +21,7 @@ public:
         m_graphics.erase(std::remove(m_graphics.begin(), m_graphics.end(), g), m_graphics.end());
     }
 
-    Point* createPoint(double x, double y) {
+    GraphicsPoint* createPoint(double x, double y) {
         Point* p = new Point(x, y);
         auto gp = new GraphicsPoint(p);
 
@@ -29,10 +29,10 @@ public:
         gp->attach();
 
         m_graphics.push_back(gp);
-        return p;
+        return gp;
     }
 
-    Line* createLine(Point* a, Point* b) {
+    GraphicsLine* createLine(Point* a, Point* b) {
         Line* l = new Line(a, b);
         auto gl = new GraphicsLine(l);
 
@@ -40,7 +40,7 @@ public:
         gl->attach();
 
         m_graphics.push_back(gl);
-        return l;
+        return gl;
     }
 
     GraphicsObject* findObjectAt(const QPointF& pos, double radius = 10.0) {
