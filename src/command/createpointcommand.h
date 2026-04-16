@@ -4,7 +4,7 @@
 #include "resultcommand.h"
 #include "../control/scenecontroller.h"
 
-class CreatePointCommand : public ResultCommand<Point*> {
+class CreatePointCommand : public ResultCommand<Point*, GraphicsPoint*> {
 public:
     SceneController* m_ctrl;
     double m_x, m_y;
@@ -35,6 +35,10 @@ public:
 
     Point* getResult() override {
         return m_point;
+    }
+
+    GraphicsPoint* getResultGraphicsObject() {
+        return m_gpoint;
     }
 };
 
