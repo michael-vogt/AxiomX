@@ -1,6 +1,8 @@
 #ifndef TOOL_H
 #define TOOL_H
 
+#include <QPointF>
+
 class Tool {
 public:
     virtual void resetTool() = 0;

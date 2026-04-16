@@ -3,6 +3,7 @@
 
 /*#include "../view/view.h"
 #include "scenecontroller.h"*/
+#include "scenecontroller.h"
 
 class InteractionManager {
 public:

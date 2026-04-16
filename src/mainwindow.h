@@ -32,20 +32,20 @@ class MainWindow : public QMainWindow {
 public:
     GeoView* m_view;
 
-    MainWindow(SceneController* controller, InteractionManager* interaction, SelectionManager* selection) /*,
+    MainWindow(SceneController* controller, InteractionManager* interaction, SelectionManager* selection, CommandManager* commandManager) /*,
                PointTool* pointTool,
                LineTool* lineTool,
                MoveTool* moveTool)*/
     {
         // Scene + View
         QGraphicsScene* scene = controller->scene();
-        m_view = new GeoView(scene);
+        m_view = new GeoView(scene, commandManager);
         m_view->setRenderHint(QPainter::Antialiasing);
         m_view->setInteractionManager(interaction);
         setCentralWidget(m_view);
 
-        PointTool* pointTool = new PointTool(controller);
-        LineTool* lineTool = new LineTool(controller, interaction, scene);
+        PointTool* pointTool = new PointTool(controller, commandManager);
+        LineTool* lineTool = new LineTool(controller, interaction, scene, commandManager);
         MoveTool* moveTool = new MoveTool(controller);
         SelectTool* selectTool = new SelectTool(controller, selection, scene);
 
