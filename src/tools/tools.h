@@ -2,6 +2,7 @@
 #define TOOLS_H
 
 #include "tool.h"
+#include "circletool.h"
 #include "linetool.h"
 #include "movetool.h"
 #include "pointtool.h"
