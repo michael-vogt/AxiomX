@@ -2,17 +2,20 @@
 #define GRAPHICSLINE_H
 
 #include <QGraphicsLineItem>
+#include <QGraphicsWidget>
+#include <QGraphicsScene>
 #include "../core/core.h"
 #include "graphicsobject.h"
 
-class GraphicsLine : public QGraphicsLineItem, public GraphicsObject {
+class GraphicsLine : public InfiniteLineItem, public GraphicsObject {
 private:
     Line* m_model;
     bool m_hovered = false;
     bool m_selected = false;
+    QGraphicsScene* m_scene;
 
     QPen m_normalPen = QPen(Qt::black, 2);
-    QPen m_hoverPen = QPen(Qt::yellow, 2);
+    QPen m_hoverPen = QPen(Qt::green, 2);
     QPen m_selectPen = QPen(Qt::red, 2);
 
     void updateVisual() {
@@ -23,10 +26,14 @@ private:
         } else {
             setPen(m_normalPen);
         }
+
+        if (m_scene) {
+            m_scene->update();
+        }
     }
 
 public:
-    GraphicsLine(Line* l) : m_model(l) {
+    GraphicsLine(Line* l, QGraphicsScene* s) : m_model(l), m_scene(s) {
         setZValue(0);
         updateVisual();
     }
@@ -36,7 +43,7 @@ public:
         updateVisual();
     }
 
-    void setSelectedVisual(bool s) {
+    void setSelectedVisual(bool s) override {
         m_selected = s;
         updateVisual();
     }
@@ -50,7 +57,7 @@ public:
         return m_model;
     }
 
-    void sync() {
+    void sync() override {
         setLine(m_model->x1(), m_model->y1(), m_model->x2(), m_model->y2());
     }
 };

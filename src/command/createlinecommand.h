@@ -12,13 +12,15 @@ public:
 
     Line* m_line = nullptr;
     GraphicsLine* m_gline = nullptr;
+    LineType m_lineType;
 
-    CreateLineCommand(SceneController* c, GraphicsPoint* a, GraphicsPoint* b)
-        : m_ctrl(c), m_a(a), m_b(b) {}
+    CreateLineCommand(SceneController* c, GraphicsPoint* a, GraphicsPoint* b, LineType lineType)
+        : m_ctrl(c), m_a(a), m_b(b), m_lineType(lineType) {}
 
     void execute() override {
         m_line = new Line(m_a->model(), m_b->model());
-        m_gline = new GraphicsLine(m_line);
+        m_gline = new GraphicsLine(m_line, m_ctrl->scene());
+        m_gline->setLineType(m_lineType);
 
         m_ctrl->scene()->addItem(m_gline);
         m_gline->attach();

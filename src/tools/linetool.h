@@ -16,12 +16,34 @@ private:
     CommandManager* m_command;
 
     GraphicsPoint* m_first = nullptr;
-    QGraphicsLineItem* m_preview = nullptr;
+    GraphicsPoint* m_temporary = nullptr;
+    InfiniteLineItem* m_preview = nullptr;
+
+    LineType m_lineType = LineType::LINE;
 
 public:
     LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm) : m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
 
+    LineType lineType() {
+        return m_lineType;
+    }
+
+    void setLineType(LineType lineType) {
+        m_lineType = lineType;
+    }
+
+    void toggleLineType() {
+        if (m_lineType == LineType::SEGMENT) {
+            m_lineType = LineType::RAY;
+        } else if (m_lineType == LineType::RAY) {
+            m_lineType = LineType::LINE;
+        } else {
+            m_lineType = LineType::SEGMENT;
+        }
+    }
+
     void resetTool() override {
+        bool update = (m_preview || m_first || m_temporary);
         if (m_preview) {
             m_scene->removeItem(m_preview);
             delete m_preview;
@@ -31,6 +53,18 @@ public:
         if (m_first) {
             m_scene->removeItem(m_first);
             m_first = nullptr;
+        }
+
+        if (m_temporary) {
+            m_ctrl->remove(m_temporary);
+            delete m_temporary;
+            m_temporary = nullptr;
+        }
+
+        m_currentlyWorking = false;
+
+        if (update) {
+            m_scene->update();
         }
     }
 
@@ -44,13 +78,22 @@ public:
 
         if (!m_first) {
             m_first = p;
+            auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y());
+            m_command->execute(cmd);
+            m_temporary = cmd->getResultGraphicsObject();
 
             QPen pen(Qt::DashLine);
             pen.setColor(Qt::gray);
             pen.setWidth(2);
-            m_preview = m_scene->addLine(QLineF(pos, pos), pen);
+
+            m_preview = new InfiniteLineItem(m_lineType);
+            m_preview->setLine(QLineF(pos, pos));
+            m_preview->setPen(pen);
+            m_scene->addItem(m_preview);
+
+            m_currentlyWorking = true;
         } else {
-            m_command->execute(new CreateLineCommand(m_ctrl, m_first, p));
+            m_command->execute(new CreateLineCommand(m_ctrl, m_first, p, m_lineType));
 
             if (m_preview) {
                 m_scene->removeItem(m_preview);
@@ -59,6 +102,8 @@ public:
             }
 
             m_first = nullptr;
+            m_scene->update();
+            m_currentlyWorking = false;
         }
     }
 
@@ -71,7 +116,12 @@ public:
             target = QPointF(snap->model()->x(), snap->model()->y());
         }
 
+        if (m_temporary) {
+            m_temporary->model()->set(target.x(), target.y());
+        }
+
         m_preview->setLine(QLineF(QPointF(m_first->model()->x(), m_first->model()->y()), target));
+        m_scene->update();
     }
 
     void mouseRelease(const QPointF&) override {}

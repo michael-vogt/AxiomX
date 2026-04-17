@@ -3,6 +3,7 @@
 
 #include <QEvent>
 #include <QGraphicsEllipseItem>
+#include <QGraphicsScene>
 #include "../core/core.h"
 #include "observer.h"
 #include "graphicsobject.h"
@@ -13,9 +14,10 @@ private:
     bool m_hovered = false;
     bool m_updating = false;
     bool m_selected = false;
+    QGraphicsScene* m_scene;
 
     QColor m_normalColor = Qt::blue;
-    QColor m_hoverColor = QColor(255, 140, 0);
+    QColor m_hoverColor = Qt::green;
     QColor m_selectColor = Qt::red;
 
     void updateVisual() {
@@ -25,6 +27,10 @@ private:
             setBrush(m_hoverColor);
         } else {
             setBrush(m_normalColor);
+        }
+
+        if (m_scene) {
+            m_scene->update();
         }
     }
 
@@ -38,7 +44,7 @@ protected:
     }
 
 public:
-    GraphicsPoint(Point* p) : QGraphicsEllipseItem(-5, -5, 10, 10), m_model(p) {
+    GraphicsPoint(Point* p, QGraphicsScene* s) : QGraphicsEllipseItem(-5, -5, 10, 10), m_model(p), m_scene(s) {
         setZValue(1);
         updateVisual();
     }

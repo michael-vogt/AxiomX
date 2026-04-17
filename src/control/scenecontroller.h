@@ -3,8 +3,6 @@
 
 #include <QGraphicsScene>
 #include <vector>
-#include "../core/core.h"
-#include "../view/graphicsobject.h"
 #include "../view/graphicspoint.h"
 #include "../view/graphicsline.h"
 
@@ -23,7 +21,7 @@ public:
 
     GraphicsPoint* createPoint(double x, double y) {
         Point* p = new Point(x, y);
-        auto gp = new GraphicsPoint(p);
+        auto gp = new GraphicsPoint(p, m_scene);
 
         m_scene->addItem(gp);
         gp->attach();
@@ -34,7 +32,7 @@ public:
 
     GraphicsLine* createLine(Point* a, Point* b) {
         Line* l = new Line(a, b);
-        auto gl = new GraphicsLine(l);
+        auto gl = new GraphicsLine(l, m_scene);
 
         m_scene->addItem(gl);
         gl->attach();

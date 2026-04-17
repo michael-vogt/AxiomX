@@ -1,6 +1,7 @@
 #ifndef GEOOBJECT_H
 #define GEOOBJECT_H
 
+#include <algorithm>
 #include <vector>
 #include "../view/observer.h"
 
@@ -29,8 +30,16 @@ public:
         dependents.push_back(obj);
     }
 
+    void removeDependent(GeoObject* obj) {
+        dependents.erase(std::remove(dependents.begin(), dependents.end(), obj), dependents.end());
+    }
+
     void addObserver(Observer* obs) {
         observers.push_back(obs);
+    }
+
+    void removeObserver(Observer* obs) {
+        observers.erase(std::remove(observers.begin(), observers.end(), obs), observers.end());
     }
 
     virtual ~GeoObject() {}
