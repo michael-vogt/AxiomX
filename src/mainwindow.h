@@ -59,7 +59,7 @@ public:
         QAction* selectAction = toolbar->addAction("Select");
         QAction* moveAction = toolbar->addAction("Move");
         QAction* pointAction = toolbar->addAction("Point");
-        QAction* lineAction = toolbar->addAction("Line");
+        QAction* lineAction = toolbar->addAction(lineTypeToString(lineTool->lineType()));
 
         selectAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
         moveAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_M));
@@ -93,8 +93,13 @@ public:
             m_view->setTool(pointTool);
         });
 
-        connect(lineAction, &QAction::triggered, [this, lineTool]() {
-            m_view->setTool(lineTool);
+        connect(lineAction, &QAction::triggered, [this, lineTool, lineAction]() {
+            if (m_view->tool() == lineTool) {
+                lineTool->toggleLineType();
+                lineAction->setText(lineTypeToString(lineTool->lineType()));
+            } else {
+                m_view->setTool(lineTool);
+            }
         });
 
         setWindowTitle("AxiomX");

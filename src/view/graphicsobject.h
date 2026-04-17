@@ -1,8 +1,10 @@
 #ifndef GRAPHICSOBJECT_H
 #define GRAPHICSOBJECT_H
 
-#include "../core/core.h"
+//#include "../core/core.h"
+#include "../core/geoobject.h"
 #include "observer.h"
+//#include "../control/scenecontroller.h"
 
 class GraphicsObject : public Observer {
 public:

@@ -1,6 +1,8 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include "infinitelineitem.h"
+
 double distancePointToSegment(const QPointF& p, const QPointF& a, const QPointF& b) {
     double dx = b.x() - a.x();
     double dy = b.y() - a.y();
@@ -16,6 +18,19 @@ double distancePointToSegment(const QPointF& p, const QPointF& a, const QPointF&
     QPointF projection(a.x() + t * dx, a.y() + t * dy);
 
     return QLineF(p, projection).length();
+}
+
+QString lineTypeToString(LineType lineType) {
+    switch (lineType) {
+    case SEGMENT:
+        return "Segment";
+    case RAY:
+        return "Ray";
+    case LINE:
+        return "Line";
+    default:
+        return "Unknown";
+    }
 }
 
 #endif // UTILITY_H

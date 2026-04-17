@@ -18,6 +18,10 @@ public:
         viewport()->setMouseTracking(true);
     }
 
+    Tool* tool() {
+        return m_tool;
+    }
+
     void setTool(Tool* t) {
         m_tool = t;
     }
@@ -46,7 +50,9 @@ protected:
     void mouseMoveEvent(QMouseEvent* event) override {
         QPointF pos = mapToScene(event->pos());
 
-        if (m_interaction) {
+        bool toolCurrentlyWorking = (m_tool && m_tool->currentlyWorking());
+
+        if (m_interaction && !toolCurrentlyWorking) {
             m_interaction->updateHover(pos);
         }
 

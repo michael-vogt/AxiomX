@@ -3,8 +3,6 @@
 
 #include <QGraphicsScene>
 #include <vector>
-#include "../core/core.h"
-#include "../view/graphicsobject.h"
 #include "../view/graphicspoint.h"
 #include "../view/graphicsline.h"
 
