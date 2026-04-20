@@ -77,8 +77,10 @@ public:
             if (tmp) {
                 m_ctrl->remove(m_temporary);
                 tmp->model()->addDependent(circle->model());
+                tmp->attach();
             } else {
                 m_temporary->model()->addDependent(circle->model());
+                m_temporary->attach();
             }
 
             if (m_preview) {

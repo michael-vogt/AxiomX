@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QPen>
 #include "graphicsobject.h"
+#include "graphicsline.h"
 #include "../core/circle.h"
 
 class GraphicsCircle : public QGraphicsEllipseItem, public GraphicsObject {
@@ -51,6 +52,26 @@ public:
     void attach() override {
         m_model->addObserver(this);
         sync();
+    }
+
+    std::vector<Point*> intersect(GraphicsCircle* other) {
+        std::vector<Point*> intersections;
+
+        if (boundingRect().intersects(other->boundingRect())) {
+            return m_model->intersect(other->model());
+        }
+
+        return intersections;
+    }
+
+    std::vector<Point*> intersect(GraphicsLine* other) {
+        std::vector<Point*> intersections;
+
+        if (boundingRect().intersects(other->boundingRect())) {
+            return m_model->intersect(other->model(), other->lineType());
+        }
+
+        return intersections;
     }
 
     Circle* model() override {
