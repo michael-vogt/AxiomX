@@ -5,6 +5,7 @@
 #include "../control/scenecontroller.h"
 #include "../command/commandmanager.h"
 #include "../command/createpointcommand.h"
+#include "../core/utility.h"
 
 class PointTool : public Tool {
 private:
@@ -17,7 +18,6 @@ public:
     void resetTool() override {}
 
     void mousePress(const QPointF &pos) override {
-        //m_ctrl->createPoint(pos.x(), pos.y());
         m_commandManager->execute(new CreatePointCommand(m_ctrl, pos.x(), pos.y()));
     }
 };

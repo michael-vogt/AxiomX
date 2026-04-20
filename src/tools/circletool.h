@@ -6,6 +6,7 @@
 #include "../command/commandmanager.h"
 #include "../command/createpointcommand.h"
 #include "../command/createcirclecommand.h"
+#include "../core/utility.h"
 
 class CircleTool : public Tool {
 private:
@@ -58,7 +59,7 @@ public:
         if (!m_first) {
             m_first = p;
 
-            auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y());
+            auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y(), true);
             m_command->execute(cmd);
             m_temporary = cmd->getResultGraphicsObject();
 
@@ -68,7 +69,17 @@ public:
 
         } else {
             QLineF line(m_first->model()->x(), m_first->model()->y(), m_temporary->model()->x(), m_temporary->model()->y());
-            m_command->execute(new CreateCircleCommand(m_ctrl, m_first, m_temporary));
+            auto cmd = new CreateCircleCommand(m_ctrl, m_first, m_temporary);
+            m_command->execute(cmd);
+            GraphicsCircle* circle = cmd->getResultGraphicsObject();
+
+            GraphicsPoint* tmp = m_ctrl->graphicsPointAlreadyExists(m_temporary);
+            if (tmp) {
+                m_ctrl->remove(m_temporary);
+                tmp->model()->addDependent(circle->model());
+            } else {
+                m_temporary->model()->addDependent(circle->model());
+            }
 
             if (m_preview) {
                 m_scene->removeItem(m_preview);
@@ -79,6 +90,8 @@ public:
             m_first = nullptr;
             m_scene->update();
             m_currentlyWorking = false;
+
+            //printGraphicsObjectsToConsole(m_ctrl->graphics());
         }
     }
 

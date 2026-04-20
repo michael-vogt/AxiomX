@@ -2,6 +2,9 @@
 #define UTILITY_H
 
 #include "infinitelineitem.h"
+#include "../view/graphicscircle.h"
+#include "../view/graphicsline.h"
+#include "../view/graphicspoint.h"
 
 double distancePointToSegment(const QPointF& p, const QPointF& a, const QPointF& b) {
     double dx = b.x() - a.x();
@@ -30,6 +33,18 @@ QString lineTypeToString(LineType lineType) {
         return "Line";
     default:
         return "Unknown";
+    }
+}
+
+void printGraphicsObjectsToConsole(std::vector<GraphicsObject*> graphics) {
+    qDebug() << "graphics contains " << QString::number(graphics.size()) + " elements:";
+    for (auto go : graphics) {
+        auto gp = dynamic_cast<GraphicsPoint*>(go);
+        if (gp) qDebug() << gp;
+        auto gl = dynamic_cast<GraphicsLine*>(go);
+        if (gl) qDebug() << gl;
+        auto gc = dynamic_cast<GraphicsCircle*>(go);
+        if (gc) qDebug() << gc;
     }
 }
 

@@ -4,8 +4,10 @@
 #include <QPointF>
 #include "geoobject.h"
 #include "point.h"
-#include "utility.h"
+//#include "utility.h"
 //#include "../view/graphicspoint.h"
+
+double distancePointToSegment(const QPointF& p, const QPointF& a, const QPointF& b);
 
 class Line : public GeoObject {
 protected:

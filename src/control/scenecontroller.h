@@ -19,15 +19,40 @@ public:
         m_graphics.erase(std::remove(m_graphics.begin(), m_graphics.end(), g), m_graphics.end());
     }
 
-    GraphicsPoint* createPoint(double x, double y) {
-        Point* p = new Point(x, y);
-        auto gp = new GraphicsPoint(p, m_scene);
+    GraphicsPoint* createPoint(double x, double y, bool isTemporaryPoint = false) {
+        GraphicsPoint* gp = dynamic_cast<GraphicsPoint*>(findObjectAt(QPointF(x, y)));
+        if (!gp || isTemporaryPoint) {
+            Point* p = new Point(x, y);
+            auto gp = new GraphicsPoint(p, m_scene);
 
-        m_scene->addItem(gp);
-        gp->attach();
 
-        m_graphics.push_back(gp);
+            m_scene->addItem(gp);
+            gp->attach();
+
+            m_graphics.push_back(gp);
+        }
         return gp;
+    }
+
+    GraphicsPoint* graphicsPointAlreadyExists(GraphicsPoint* gpToCheck) {
+        for (auto g : m_graphics) {
+            auto gp = dynamic_cast<GraphicsPoint*>(g);
+            if (!gp) continue;
+
+            if (gp != gpToCheck && gp->equals(gpToCheck)) return gp;
+        }
+        return nullptr;
+    }
+
+    bool pointExists(Point* p) {
+        for (auto g : m_graphics) {
+            auto gp = dynamic_cast<GraphicsPoint*>(g);
+            if (!gp) continue;
+
+            Point* q = gp->model();
+            if (q->x() == p->x() && q->y() == p->y()) return true;
+        }
+        return false;
     }
 
     GraphicsLine* createLine(Point* a, Point* b) {

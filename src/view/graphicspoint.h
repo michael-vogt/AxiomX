@@ -73,6 +73,11 @@ public:
         setPos(m_model->x(), m_model->y());
         m_updating = false;
     }
+
+    bool equals(GraphicsPoint* other) {
+        if (!other || !m_model) return false;
+        return (m_model->x() == other->model()->x() && m_model->y() == other->model()->y());
+    }
 };
 
 #endif // GRAPHICSPOINT_H

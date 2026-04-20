@@ -7,6 +7,7 @@
 #include "../command/createpointcommand.h"
 #include "../command/createlinecommand.h"
 #include "../tools/tool.h"
+#include "../core/utility.h"
 
 class LineTool : public Tool {
 private:
@@ -78,7 +79,7 @@ public:
 
         if (!m_first) {
             m_first = p;
-            auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y());
+            auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y(), true);
             m_command->execute(cmd);
             m_temporary = cmd->getResultGraphicsObject();
 
@@ -93,7 +94,19 @@ public:
 
             m_currentlyWorking = true;
         } else {
-            m_command->execute(new CreateLineCommand(m_ctrl, m_first, p, m_lineType));
+            auto cmd = new CreateLineCommand(m_ctrl, m_first, p, m_lineType);
+            m_command->execute(cmd);
+            GraphicsLine* line = cmd->getResultGraphicsObject();
+
+            if (m_temporary) {
+                GraphicsPoint* tmp = m_ctrl->graphicsPointAlreadyExists(m_temporary);
+                if (tmp) {
+                    m_ctrl->remove(m_temporary);
+                    tmp->model()->addDependent(line->model());
+                } else {
+                    m_temporary->model()->addDependent(line->model());
+                }
+            }
 
             if (m_preview) {
                 m_scene->removeItem(m_preview);
@@ -104,6 +117,8 @@ public:
             m_first = nullptr;
             m_scene->update();
             m_currentlyWorking = false;
+
+            //printGraphicsObjectsToConsole(m_ctrl->graphics());
         }
     }
 

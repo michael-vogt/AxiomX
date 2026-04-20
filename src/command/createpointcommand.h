@@ -8,16 +8,20 @@ class CreatePointCommand : public ResultCommand<Point*, GraphicsPoint*> {
 public:
     SceneController* m_ctrl;
     double m_x, m_y;
+    bool m_isTemporaryPoint;
 
     Point* m_point = nullptr;
     GraphicsPoint* m_gpoint = nullptr;
 
-    CreatePointCommand(SceneController* c, double x, double y)
-        : m_ctrl(c), m_x(x), m_y(y) {}
+    CreatePointCommand(SceneController* c, double x, double y, bool isTemporaryPoint = false)
+        : m_ctrl(c), m_x(x), m_y(y), m_isTemporaryPoint(isTemporaryPoint) {}
 
     void execute() override {
         if (!m_point) {
             m_point = new Point(m_x, m_y);
+            if (m_ctrl->pointExists(m_point) && !m_isTemporaryPoint) {
+                qDebug() << "Punkt existiert bereits: " << QString::number(m_x) << ", " << QString::number(m_y);
+            }
             m_gpoint = new GraphicsPoint(m_point, m_ctrl->scene());
         }
 
@@ -37,7 +41,7 @@ public:
         return m_point;
     }
 
-    GraphicsPoint* getResultGraphicsObject() {
+    GraphicsPoint* getResultGraphicsObject() override {
         return m_gpoint;
     }
 };

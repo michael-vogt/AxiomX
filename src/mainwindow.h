@@ -27,6 +27,7 @@ private:
 #include "control/control.h"
 #include "view/view.h"
 #include "tools/tools.h"
+#include "core/utility.h"
 
 class MainWindow : public QMainWindow {
 public:
