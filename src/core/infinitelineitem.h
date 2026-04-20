@@ -19,6 +19,10 @@ public:
 
     InfiniteLineItem(LineType lineType) : m_lineType(lineType) {}
 
+    LineType lineType() {
+        return m_lineType;
+    }
+
     void setLineType(LineType lineType) {
         m_lineType = lineType;
     }

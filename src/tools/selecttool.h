@@ -1,6 +1,7 @@
 #ifndef SELECTTOOL_H
 #define SELECTTOOL_H
 
+#include <QApplication>
 #include "tool.h"
 #include "../control/scenecontroller.h"
 #include "../control/selectionmanager.h"
@@ -83,6 +84,16 @@ public:
                     if (selectionRect.contains(lineBox)) {
                         if (!m_selection->isSelected(gl)) {
                             m_selection->select(gl, true);
+                        }
+                    }
+                }
+
+                // Kreise
+                if (auto gc = dynamic_cast<GraphicsCircle*>(g)) {
+                    QRectF circleBox = gc->boundingRect();
+                    if (selectionRect.contains(circleBox)) {
+                        if (!m_selection->isSelected(gc)) {
+                            m_selection->select(gc, true);
                         }
                     }
                 }

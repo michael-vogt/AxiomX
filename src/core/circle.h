@@ -47,6 +47,12 @@ public:
         return m_y2;
     }
 
+    bool pointOnCircle(const QPointF& p, double delta = 0.0) {
+        QPointF m(m_x1, m_y1);
+        QLineF mp(m, p);
+        return (std::abs(mp.length() - m_radius) <= delta);
+    }
+
     void update() override {
         m_x1 = m_center->x();
         m_y1 = m_center->y();

@@ -4,6 +4,7 @@
 #include <QPointF>
 #include "geoobject.h"
 #include "point.h"
+#include "infinitelineitem.h"
 //#include "utility.h"
 //#include "../view/graphicspoint.h"
 
@@ -55,7 +56,7 @@ public:
         m_y2 = m_p2->y();
     }
 
-    double distanceToPoint(const QPointF& pos) {
+    double distanceToPoint(const QPointF& pos, LineType lineType) {
         /*double x0 = pos.x();
         double y0 = pos.y();
 
@@ -69,7 +70,17 @@ public:
         return numerator / denominator;*/
         QPointF a(m_p1->x(), m_p1->y());
         QPointF b(m_p2->x(), m_p2->y());
-        return distancePointToSegment(pos, a, b);
+
+        QPointF dir = b - a;
+
+        // berechne die Projektion von pos auf die Gerade durch a und b
+        // abhängig vom Linientyp wird der Parameter t beschränkt.
+        double t = QPointF::dotProduct(pos - a, dir) / QPointF::dotProduct(dir, dir);
+        if (lineType == RAY) t = std::max(t, 0.0);
+        if (lineType == SEGMENT) t = std::min(1.0, std::max(t, 0.0));
+        QPointF pProj = a + t * dir;
+
+        return QLineF(pos, pProj).length();
     }
 
 };
