@@ -5,6 +5,7 @@
 #include <vector>
 #include "../view/graphicspoint.h"
 #include "../view/graphicsline.h"
+#include "../view/graphicscircle.h"
 
 class SceneController {
 private:
@@ -67,6 +68,7 @@ public:
     }
 
     GraphicsObject* findObjectAt(const QPointF& pos, double radius = 10.0) {
+        // 1. Punkt
         for (auto g : m_graphics) {
             auto gp = dynamic_cast<GraphicsPoint*>(g);
             if (gp && QLineF(gp->pos(), pos).length() < radius) {
@@ -74,13 +76,21 @@ public:
             }
         }
 
+        // 2. Linien
         for (auto g : m_graphics) {
             auto gl = dynamic_cast<GraphicsLine*>(g);
-            if (gl && gl->model()->distanceToPoint(pos) < radius) {
+            if (gl && gl->model()->distanceToPoint(pos, gl->lineType()) < radius) {
                 return gl;
             }
         }
 
+        // 3. Kreise
+        for (auto g : m_graphics) {
+            auto gc = dynamic_cast<GraphicsCircle*>(g);
+            if (gc && gc->model()->pointOnCircle(pos, 6.0)) {
+                return gc;
+            }
+        }
         return nullptr;
     }
 
