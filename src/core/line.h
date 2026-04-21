@@ -50,16 +50,26 @@ public:
     }
 
     bool contains(const QPointF& p, LineType lineType)  {
-        double t1 = (p.x() - x1()) / (x2() - x1());
-        double t2 = (p.y() - y1()) / (y2() - y1());
+        //double t1 = (p.x() - x1()) / (x2() - x1());
+        //double t2 = (p.y() - y1()) / (y2() - y1());
+        double D = (p.x() - x1()) * (y2() - y1()) - (p.y() - y1()) * ((x2() - x1()));
 
-        if (std::abs(t1 - t2) >= 1e-10) {
+        if (std::abs(D) >= 1e-10) {
             return false;
         }
 
-        if (t1 < 0) {
+        double t;
+        if (std::abs(x2()-x1()) > 1e-10) {
+            t = (p.x() - x1()) / (x2() - x1());
+        } else if (std::abs(y2() - y1()) > 1e-10) {
+            t = (p.y() - y1()) / (y2() - y1());
+        } else {
+            return true;
+        }
+
+        if (t < 0) {
             if (lineType == LINE) return true;
-        } else if (t1 > 1) {
+        } else if (t > 1) {
             if (lineType != SEGMENT) return true;
         } else {
             return true;
@@ -85,7 +95,10 @@ public:
         double s = ((other->x1() - x1()) * dy1 - (other->y1() - y1()) * dx1) / denominator;
 
         QPointF S(x1() + t * (x2() - x1()), y1() + t * (y2() - y1()));
-        if (contains(S, lineTypeThis) && other->contains(S, lineTypeOther)) {
+        bool SinThis = contains(S, lineTypeThis);
+        bool SinOther = other->contains(S, lineTypeOther);
+        if (SinThis && SinOther) {
+        //if (contains(S, lineTypeThis) && other->contains(S, lineTypeOther)) {
             points.push_back(new Point(S.x(), S.y()));
         }
 
