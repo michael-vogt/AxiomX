@@ -80,6 +80,9 @@ public:
         points.push_back(sp1);
         if (!(std::abs(h) < 1e-10)) {
             points.push_back(sp2);
+        } else {
+            delete sp2;
+            sp2 = nullptr;
         }
 
         return points;
