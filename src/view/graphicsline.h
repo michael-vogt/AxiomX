@@ -53,6 +53,16 @@ public:
         sync();
     }
 
+    std::vector<Point*> intersect(GraphicsLine* other) {
+        std::vector<Point*> intersections;
+
+        //if (boundingRect().intersects(other->boundingRect())) {
+        return m_model->intersect(other->model(), other->lineType(), lineType());
+        //}
+
+        return intersections;
+    }
+
     Line* model() override {
         return m_model;
     }

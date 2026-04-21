@@ -49,6 +49,49 @@ public:
         return m_y2;
     }
 
+    bool contains(const QPointF& p, LineType lineType)  {
+        double t1 = (p.x() - x1()) / (x2() - x1());
+        double t2 = (p.y() - y1()) / (y2() - y1());
+
+        if (std::abs(t1 - t2) >= 1e-10) {
+            return false;
+        }
+
+        if (t1 < 0) {
+            if (lineType == LINE) return true;
+        } else if (t1 > 1) {
+            if (lineType != SEGMENT) return true;
+        } else {
+            return true;
+        }
+
+        return false;
+    }
+
+    std::vector<Point*> intersect(Line* other, LineType lineTypeOther, LineType lineTypeThis) {
+        std::vector<Point*> points;
+
+        double dx1 = x2() - x1();
+        double dy1 = y2() - y1();
+        double dx2 = other->x2() - other->x1();
+        double dy2 = other->y2() - other->y1();
+
+        double denominator = dx1 * dy2 - dy1 * dx2;
+        if (std::abs(denominator) < 1e-10) {
+            return points;
+        }
+
+        double t = ((other->x1() - x1()) * dy2 - (other->y1() - y1()) * dx2) / denominator;
+        double s = ((other->x1() - x1()) * dy1 - (other->y1() - y1()) * dx1) / denominator;
+
+        QPointF S(x1() + t * (x2() - x1()), y1() + t * (y2() - y1()));
+        if (contains(S, lineTypeThis) && other->contains(S, lineTypeOther)) {
+            points.push_back(new Point(S.x(), S.y()));
+        }
+
+        return points;
+    }
+
     void update() override {
         m_x1 = m_p1->x();
         m_y1 = m_p1->y();

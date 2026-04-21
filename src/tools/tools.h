@@ -3,6 +3,7 @@
 
 #include "tool.h"
 #include "circletool.h"
+#include "intersectiontool.h"
 #include "linetool.h"
 #include "movetool.h"
 #include "pointtool.h"
