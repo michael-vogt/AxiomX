@@ -23,6 +23,11 @@ double distancePointToSegment(const QPointF& p, const QPointF& a, const QPointF&
     return QLineF(p, projection).length();
 }
 
+template<typename Base, typename T>
+inline bool instanceOf(T* ptr) {
+    return (dynamic_cast<Base*>(ptr) != nullptr);
+}
+
 QString lineTypeToString(LineType lineType) {
     switch (lineType) {
     case SEGMENT:

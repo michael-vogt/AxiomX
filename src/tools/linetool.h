@@ -17,7 +17,7 @@ private:
     CommandManager* m_command;
 
     GraphicsPoint* m_first = nullptr;
-    GraphicsPoint* m_temporary = nullptr;
+    //GraphicsPoint* m_temporary = nullptr;
     InfiniteLineItem* m_preview = nullptr;
 
     LineType m_lineType = LineType::LINE;
@@ -44,7 +44,7 @@ public:
     }
 
     void resetTool() override {
-        bool update = (m_preview || m_first || m_temporary);
+        bool update = (m_preview || m_first/* || m_temporary*/);
         if (m_preview) {
             m_scene->removeItem(m_preview);
             delete m_preview;
@@ -56,11 +56,11 @@ public:
             m_first = nullptr;
         }
 
-        if (m_temporary) {
+        /*if (m_temporary) {
             m_ctrl->remove(m_temporary);
             delete m_temporary;
             m_temporary = nullptr;
-        }
+        }*/
 
         m_currentlyWorking = false;
 
@@ -79,9 +79,9 @@ public:
 
         if (!m_first) {
             m_first = p;
-            auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y(), true);
+            /*auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y(), true);
             m_command->execute(cmd);
-            m_temporary = cmd->getResultGraphicsObject();
+            m_temporary = cmd->getResultGraphicsObject();*/
 
             QPen pen(Qt::DashLine);
             pen.setColor(Qt::gray);
@@ -98,7 +98,7 @@ public:
             m_command->execute(cmd);
             GraphicsLine* line = cmd->getResultGraphicsObject();
 
-            if (m_temporary) {
+            /*if (m_temporary) {
                 GraphicsPoint* tmp = m_ctrl->graphicsPointAlreadyExists(m_temporary);
                 if (tmp) {
                     m_ctrl->remove(m_temporary);
@@ -106,7 +106,7 @@ public:
                 } else {
                     m_temporary->model()->addDependent(line->model());
                 }
-            }
+            }*/
 
             if (m_preview) {
                 m_scene->removeItem(m_preview);
@@ -131,9 +131,9 @@ public:
             target = QPointF(snap->model()->x(), snap->model()->y());
         }
 
-        if (m_temporary) {
+        /*if (m_temporary) {
             m_temporary->model()->set(target.x(), target.y());
-        }
+        }*/
 
         m_preview->setLine(QLineF(QPointF(m_first->model()->x(), m_first->model()->y()), target));
         m_scene->update();

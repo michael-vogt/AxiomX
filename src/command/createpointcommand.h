@@ -21,6 +21,7 @@ public:
             m_point = new Point(m_x, m_y);
             if (m_ctrl->pointExists(m_point) && !m_isTemporaryPoint) {
                 qDebug() << "Punkt existiert bereits: " << QString::number(m_x) << ", " << QString::number(m_y);
+                return;
             }
             m_gpoint = new GraphicsPoint(m_point, m_ctrl->scene());
         }

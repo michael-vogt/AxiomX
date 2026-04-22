@@ -16,8 +16,28 @@ public:
     SceneController(QGraphicsScene* s) : m_scene(s) {}
 
     void remove(GraphicsObject* g) {
-        m_scene->removeItem(dynamic_cast<QGraphicsItem*>(g));
+        if (g->scene()) g->scene()->removeItem(dynamic_cast<QGraphicsItem*>(g));
         m_graphics.erase(std::remove(m_graphics.begin(), m_graphics.end(), g), m_graphics.end());
+    }
+
+    void deleteSelected() {
+        std::vector<GraphicsPoint*> selectedPoints;
+        std::vector<GraphicsLine*> selectedLines;
+        std::vector<GraphicsCircle*> selectedCircles;
+        for (auto g : m_graphics) {
+            if (!g->selected()) continue;
+            if (GraphicsPoint* gp = dynamic_cast<GraphicsPoint*>(g)) {
+                selectedPoints.push_back(gp);
+            } else if (GraphicsLine* gl = dynamic_cast<GraphicsLine*>(g)) {
+                selectedLines.push_back(gl);
+            } else if (GraphicsCircle* gc = dynamic_cast<GraphicsCircle*>(g)) {
+                selectedCircles.push_back(gc);
+            }
+        }
+
+        for (auto gc : selectedCircles) remove(gc);
+        for (auto gl : selectedLines) remove(gl);
+        for (auto gp : selectedPoints) remove(gp);
     }
 
     GraphicsPoint* createPoint(double x, double y, bool isTemporaryPoint = false) {

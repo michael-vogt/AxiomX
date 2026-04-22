@@ -82,6 +82,7 @@ public:
             if (!gp) continue;
 
             if (QLineF(gp->pos(), pos).length() < 10.0) {
+                gp->setScene(g->scene());
                 m_snappedPoint = gp;
                 return gp;
             }

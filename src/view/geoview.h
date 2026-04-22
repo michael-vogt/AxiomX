@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include "../tools/tools.h"
 #include "../control/interactionmanager.h"
+#include "../core/utility.h"
 
 class GeoView : public QGraphicsView {
 private:
@@ -47,6 +48,11 @@ protected:
 
         if (event->key() == Qt::Key_Escape && m_tool) {
             m_tool->resetTool();
+        }
+
+        if (event->key() == Qt::Key_Delete) {
+            m_ctrl->deleteSelected();
+            scene()->update();
         }
     }
 

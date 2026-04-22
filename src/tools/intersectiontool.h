@@ -61,8 +61,10 @@ private:
             auto cmd = new CreatePointCommand(m_ctrl, p->x(), p->y());
             m_command->execute(cmd);
             GraphicsPoint* gp = cmd->getResultGraphicsObject();
-            gp->model()->addDependent(obj1->model());
-            gp->model()->addDependent(obj2->model());
+            if (gp) {
+                gp->model()->addDependent(obj1->model());
+                gp->model()->addDependent(obj2->model());
+            }
         }
     }
 };

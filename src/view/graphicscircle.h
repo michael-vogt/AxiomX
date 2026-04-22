@@ -12,8 +12,6 @@ class GraphicsCircle : public QGraphicsEllipseItem, public GraphicsObject {
 private:
     Circle* m_model;
     bool m_hovered = false;
-    bool m_selected = false;
-    QGraphicsScene* m_scene;
 
     QPen m_normalPen = QPen(Qt::black, 2);
     QPen m_hoverPen = QPen(Qt::green, 2);
@@ -34,7 +32,8 @@ private:
     }
 
 public:
-    GraphicsCircle(Circle* c, QGraphicsScene* s) : m_model(c), m_scene(s) {
+    GraphicsCircle(Circle* c, QGraphicsScene* s) : m_model(c) {
+        setScene(s);
         setZValue(0);
         updateVisual();
     }
