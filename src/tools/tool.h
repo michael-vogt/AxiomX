@@ -7,7 +7,7 @@ class Tool {
 protected:
     bool m_currentlyWorking = false;
 public:
-    bool currentlyWorking() { return m_currentlyWorking; }
+    bool currentlyWorking();
     virtual void resetTool() = 0;
     virtual void mousePress(const QPointF& pos) = 0;
     virtual void mouseMove(const QPointF& pos) {}

@@ -11,20 +11,11 @@ public:
     double m_oldX, m_oldY;
     double m_newX, m_newY;
 
-    MovePointCommand(Point* p,
-                     double oldX, double oldY,
-                     double newX, double newY)
-        : m_point(p),
-        m_oldX(oldX), m_oldY(oldY),
-        m_newX(newX), m_newY(newY) {}
+    MovePointCommand(Point* p, double oldX, double oldY, double newX, double newY);
 
-    void execute() override {
-        m_point->set(m_newX, m_newY);
-    }
+    void execute() override;
 
-    void undo() override {
-        m_point->set(m_oldX, m_oldY);
-    }
+    void undo() override;
 };
 
 #endif // MOVEPOINTCOMMAND_H

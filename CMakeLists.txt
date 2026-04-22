@@ -44,6 +44,35 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/command/createcirclecommand.h
         src/tools/intersectiontool.h
         src/view/grid.h
+        src/command/commandmanager.cpp
+        src/command/createcirclecommand.cpp
+        src/command/createlinecommand.cpp
+        src/command/createpointcommand.cpp
+        src/command/movepointcommand.cpp
+        src/control/interactionmanager.cpp
+        src/control/scenecontroller.cpp
+        src/control/selectionmanager.cpp
+        src/tools/circletool.cpp
+        src/tools/intersectiontool.cpp
+        src/tools/linetool.cpp
+        src/tools/movetool.cpp
+        src/tools/pointtool.cpp
+        src/tools/selecttool.cpp
+        src/tools/tool.cpp
+        src/core/circle.cpp
+        src/core/geoobject.cpp
+        src/core/infinitelineitem.cpp
+        src/core/line.cpp
+        src/core/point.cpp
+        src/core/utility.cpp
+        src/view/geoview.cpp
+        src/view/graphicscircle.cpp
+        src/view/graphicsline.cpp
+        src/view/graphicsobject.cpp
+        src/view/graphicspoint.cpp
+        src/view/grid.cpp
+        src/view/observer.cpp
+        src/mainwindow.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET AxiomX APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

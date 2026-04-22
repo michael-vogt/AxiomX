@@ -9,36 +9,11 @@ public:
     std::stack<Command*> undoStack;
     std::stack<Command*> redoStack;
 
-    void execute(Command* cmd) {
-        cmd->execute();
-        undoStack.push(cmd);
+    void execute(Command* cmd);
 
-        // redo wird invalidiert
-        while (!redoStack.empty()) {
-            delete redoStack.top();
-            redoStack.pop();
-        }
-    }
+    void undo();
 
-    void undo() {
-        if (undoStack.empty()) return;
-
-        Command* cmd = undoStack.top();
-        undoStack.pop();
-
-        cmd->undo();
-        redoStack.push(cmd);
-    }
-
-    void redo() {
-        if (redoStack.empty()) return;
-
-        Command* cmd = redoStack.top();
-        redoStack.pop();
-
-        cmd->execute();
-        undoStack.push(cmd);
-    }
+    void redo();
 };
 
 #endif // COMMANDMANAGER_H

@@ -14,33 +14,15 @@ public:
     GraphicsLine* m_gline = nullptr;
     LineType m_lineType;
 
-    CreateLineCommand(SceneController* c, GraphicsPoint* a, GraphicsPoint* b, LineType lineType)
-        : m_ctrl(c), m_a(a), m_b(b), m_lineType(lineType) {}
+    CreateLineCommand(SceneController* c, GraphicsPoint* a, GraphicsPoint* b, LineType lineType);
 
-    void execute() override {
-        m_line = new Line(m_a->model(), m_b->model());
-        m_gline = new GraphicsLine(m_line, m_ctrl->scene());
-        m_gline->setLineType(m_lineType);
+    void execute() override;
 
-        m_ctrl->scene()->addItem(m_gline);
-        m_gline->attach();
+    void undo() override;
 
-        m_ctrl->graphics().push_back(m_gline);
-    }
+    Line* getResult() override;
 
-    void undo() override {
-        m_ctrl->scene()->removeItem(m_gline);
-        auto graphics = m_ctrl->graphics();
-        graphics.erase(std::remove(graphics.begin(), graphics.end(), m_gline), graphics.end());
-    }
-
-    Line* getResult() override {
-        return m_line;
-    }
-
-    GraphicsLine* getResultGraphicsObject() override {
-        return m_gline;
-    }
+    GraphicsLine* getResultGraphicsObject() override;
 };
 
 #endif // CREATELINECOMMAND_H
