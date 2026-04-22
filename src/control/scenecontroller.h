@@ -3,13 +3,14 @@
 
 #include <QGraphicsScene>
 #include <vector>
+//#include "../view/geoview.h"
 #include "../view/graphicspoint.h"
 #include "../view/graphicsline.h"
 #include "../view/graphicscircle.h"
 
 class SceneController {
 private:
-    QGraphicsScene* m_scene;
+    QGraphicsScene* m_scene = nullptr;
     std::vector<GraphicsObject*> m_graphics;
 
 public:

@@ -6,19 +6,22 @@
 #include "../command/commandmanager.h"
 #include "../command/createpointcommand.h"
 #include "../core/utility.h"
+#include "../view/grid.h"
 
 class PointTool : public Tool {
 private:
-    SceneController* m_ctrl;
-    CommandManager* m_commandManager;
+    SceneController* m_ctrl = nullptr;
+    CommandManager* m_commandManager = nullptr;
+    Grid* m_grid = nullptr;
 
 public:
-    PointTool(SceneController* c, CommandManager* cm) : m_ctrl(c), m_commandManager(cm) {}
+    PointTool(SceneController* c, CommandManager* cm, Grid* g) : m_ctrl(c), m_commandManager(cm), m_grid(g) {}
 
     void resetTool() override {}
 
     void mousePress(const QPointF &pos) override {
-        m_commandManager->execute(new CreatePointCommand(m_ctrl, pos.x(), pos.y()));
+        QPointF snappedPoint = m_grid->snapToGrid(pos);
+        m_commandManager->execute(new CreatePointCommand(m_ctrl, snappedPoint.x(), snappedPoint.y()));
     }
 };
 

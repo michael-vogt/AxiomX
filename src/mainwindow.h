@@ -45,7 +45,7 @@ public:
         m_view->setInteractionManager(interaction);
         setCentralWidget(m_view);
 
-        PointTool* pointTool = new PointTool(controller, commandManager);
+        PointTool* pointTool = new PointTool(controller, commandManager, m_view->grid());
         LineTool* lineTool = new LineTool(controller, interaction, scene, commandManager);
         MoveTool* moveTool = new MoveTool(controller);
         SelectTool* selectTool = new SelectTool(controller, selection, scene);
