@@ -13,8 +13,6 @@ private:
     Point* m_model;
     bool m_hovered = false;
     bool m_updating = false;
-    bool m_selected = false;
-    QGraphicsScene* m_scene;
 
     QColor m_normalColor = Qt::blue;
     QColor m_hoverColor = Qt::green;
@@ -44,7 +42,8 @@ protected:
     }
 
 public:
-    GraphicsPoint(Point* p, QGraphicsScene* s) : QGraphicsEllipseItem(-5, -5, 10, 10), m_model(p), m_scene(s) {
+    GraphicsPoint(Point* p, QGraphicsScene* s) : QGraphicsEllipseItem(-5, -5, 10, 10), m_model(p) {
+        setScene(s);
         setZValue(1);
         updateVisual();
     }

@@ -11,8 +11,6 @@ class GraphicsLine : public InfiniteLineItem, public GraphicsObject {
 private:
     Line* m_model;
     bool m_hovered = false;
-    bool m_selected = false;
-    QGraphicsScene* m_scene;
 
     QPen m_normalPen = QPen(Qt::black, 2);
     QPen m_hoverPen = QPen(Qt::green, 2);
@@ -33,7 +31,8 @@ private:
     }
 
 public:
-    GraphicsLine(Line* l, QGraphicsScene* s) : m_model(l), m_scene(s) {
+    GraphicsLine(Line* l, QGraphicsScene* s) : m_model(l) {
+        setScene(s);
         setZValue(0);
         updateVisual();
     }
