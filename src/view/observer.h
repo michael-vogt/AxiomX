@@ -4,7 +4,7 @@
 class Observer {
 public:
     virtual void sync() = 0;
-    virtual ~Observer() {}
+    virtual ~Observer();
 };
 
 #endif // OBSERVER_H

@@ -10,24 +10,15 @@ private:
     Point* m_selected = nullptr;
 
 public:
-    MoveTool(SceneController* c) : m_ctrl(c) {}
+    MoveTool(SceneController* c);
 
-    void resetTool() override {}
+    void resetTool() override;
 
-    void mousePress(const QPointF &pos) override {
-        m_selected = m_ctrl->findPointNear(pos);
-    }
+    void mousePress(const QPointF &pos) override;
 
-    void mouseMove(const QPointF &pos) override {
-        if (m_selected) {
-            m_selected->set(pos.x(), pos.y());
-            m_ctrl->scene()->update();
-        }
-    }
+    void mouseMove(const QPointF &pos) override;
 
-    void mouseRelease(const QPointF &pos) override {
-        m_selected = nullptr;
-    }
+    void mouseRelease(const QPointF &pos) override;
 };
 
 #endif // MOVETOOL_H

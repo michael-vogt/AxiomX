@@ -8,25 +8,15 @@ protected:
     double m_x, m_y;
 
 public:
-    Point(double x, double y) : m_x(x), m_y(y) {}
+    Point(double x, double y);
 
-    double x() {
-        return m_x;
-    }
+    double x();
 
-    double y() {
-        return m_y;
-    }
+    double y();
 
-    void set(double nx, double ny) {
-        m_x = nx;
-        m_y = ny;
-        notify();
-    }
+    void set(double nx, double ny);
 
-    void update() {
-        // free point -> nothing to do
-    }
+    void update() override;
 };
 
 #endif // POINT_H

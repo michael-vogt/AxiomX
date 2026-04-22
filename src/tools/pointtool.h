@@ -5,21 +5,21 @@
 #include "../control/scenecontroller.h"
 #include "../command/commandmanager.h"
 #include "../command/createpointcommand.h"
-#include "../core/utility.h"
+#include "../view/grid.h"
 
 class PointTool : public Tool {
 private:
     SceneController* m_ctrl;
     CommandManager* m_commandManager;
+    Grid* m_grid = nullptr;
 
 public:
-    PointTool(SceneController* c, CommandManager* cm) : m_ctrl(c), m_commandManager(cm) {}
+    PointTool(SceneController* c, CommandManager* cm, Grid* g);
 
-    void resetTool() override {}
+    void resetTool() override;
 
-    void mousePress(const QPointF &pos) override {
-        m_commandManager->execute(new CreatePointCommand(m_ctrl, pos.x(), pos.y()));
-    }
+    void mousePress(const QPointF &pos) override;
+
 };
 
 #endif // POINTTOOL_H

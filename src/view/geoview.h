@@ -6,6 +6,7 @@
 #include "../tools/tools.h"
 #include "../control/interactionmanager.h"
 #include "../core/utility.h"
+#include "grid.h"
 
 class GeoView : public QGraphicsView {
 private:
@@ -13,84 +14,33 @@ private:
     InteractionManager* m_interaction = nullptr;
     CommandManager* m_commandManager = nullptr;
     SceneController* m_ctrl = nullptr;
+    Grid* m_grid = nullptr;
 
 public:
-    GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c) : QGraphicsView(s), m_commandManager(cmd), m_ctrl(c) {
-        setMouseTracking(true);
-        viewport()->setMouseTracking(true);
-    }
 
-    Tool* tool() {
-        return m_tool;
-    }
+    GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c);
 
-    void setTool(Tool* t) {
-        m_tool = t;
-    }
+    Grid* grid();
 
-    void setInteractionManager(InteractionManager* im) {
-        m_interaction = im;
-    }
+    Tool* tool();
+
+    void setTool(Tool* t);
+
+    void setInteractionManager(InteractionManager* im);
 
 protected:
-    void keyPressEvent(QKeyEvent* event) override {
-        if (event->modifiers() & Qt::ControlModifier) {
-            if (event->key() == Qt::Key_Z) {
-                m_commandManager->undo();
-                this->scene()->update();
-            } else if (event->key() == Qt::Key_Y) {
-                m_commandManager->redo();
-                this->scene()->update();
-            } else if (event->key() == Qt::Key_V) {
-                printGraphicsObjectsToConsole(m_ctrl->graphics());
-            }
-        }
+    void keyPressEvent(QKeyEvent* event) override;
 
-        if (event->key() == Qt::Key_Escape && m_tool) {
-            m_tool->resetTool();
-        }
+    void mouseMoveEvent(QMouseEvent* event) override;
 
-        if (event->key() == Qt::Key_Delete) {
-            m_ctrl->deleteSelected();
-            scene()->update();
-        }
-    }
+    void mousePressEvent(QMouseEvent* event) override;
 
-    void mouseMoveEvent(QMouseEvent* event) override {
-        QPointF pos = mapToScene(event->pos());
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
-        bool toolCurrentlyWorking = (m_tool && m_tool->currentlyWorking());
+    void wheelEvent(QWheelEvent* event) override;
 
-        if (m_interaction && !toolCurrentlyWorking) {
-            m_interaction->updateHover(pos);
-        }
+    void drawBackground(QPainter *painter, const QRectF &rect) override;
 
-        if (m_tool) {
-            m_tool->mouseMove(pos);
-        }
-
-        QGraphicsView::mouseMoveEvent(event);
-    }
-
-    void mousePressEvent(QMouseEvent* event) override {
-        QPointF pos = mapToScene(event->pos());
-
-        if (m_tool) {
-            m_tool->mousePress(pos);
-        }
-
-        QGraphicsView::mousePressEvent(event);
-    }
-
-    void mouseReleaseEvent(QMouseEvent* event) override {
-        QPointF pos = mapToScene(event->pos());
-
-        if (m_tool) {
-            m_tool->mouseRelease(pos);
-        }
-
-        QGraphicsView::mouseReleaseEvent(event);
-    }
 };
 
 #endif // GEOVIEW_H

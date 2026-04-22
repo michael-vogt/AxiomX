@@ -16,59 +16,22 @@ private:
     QPen m_hoverPen = QPen(Qt::green, 2);
     QPen m_selectPen = QPen(Qt::red, 2);
 
-    void updateVisual() {
-        if (m_selected) {
-            setPen(m_selectPen);
-        } else if (m_hovered) {
-            setPen(m_hoverPen);
-        } else {
-            setPen(m_normalPen);
-        }
-
-        if (m_scene) {
-            m_scene->update();
-        }
-    }
+    void updateVisual();
 
 public:
-    GraphicsLine(Line* l, QGraphicsScene* s) : m_model(l) {
-        setScene(s);
-        setZValue(0);
-        updateVisual();
-    }
+    GraphicsLine(Line* l, QGraphicsScene* s);
 
-    void setHovered(bool h) {
-        m_hovered = h;
-        updateVisual();
-    }
+    void setHovered(bool h);
 
-    void setSelectedVisual(bool s) override {
-        m_selected = s;
-        updateVisual();
-    }
+    void setSelectedVisual(bool s) override;
 
-    void attach() override {
-        m_model->addObserver(this);
-        sync();
-    }
+    void attach() override;
 
-    std::vector<Point*> intersect(GraphicsLine* other) {
-        std::vector<Point*> intersections;
+    std::vector<Point*> intersect(GraphicsLine* other);
 
-        //if (boundingRect().intersects(other->boundingRect())) {
-        return m_model->intersect(other->model(), other->lineType(), lineType());
-        //}
+    Line* model() override;
 
-        return intersections;
-    }
-
-    Line* model() override {
-        return m_model;
-    }
-
-    void sync() override {
-        setLine(m_model->x1(), m_model->y1(), m_model->x2(), m_model->y2());
-    }
+    void sync() override;
 };
 
 #endif // GRAPHICSLINE_H

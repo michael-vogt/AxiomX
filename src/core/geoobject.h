@@ -11,38 +11,19 @@ protected:
     std::vector<Observer*> observers;
 
 public:
-    virtual void update() {}
+    virtual void update();
 
-    void notify() {
-        // 1. Update model
-        for (auto d : dependents) {
-            d->update();
-            d->notify();
-        }
+    void notify();
 
-        // 2. Notify view
-        for (auto obs : observers) {
-            obs->sync();
-        }
-    }
+    void addDependent(GeoObject* obj);
 
-    void addDependent(GeoObject* obj) {
-        dependents.push_back(obj);
-    }
+    void removeDependent(GeoObject* obj);
 
-    void removeDependent(GeoObject* obj) {
-        dependents.erase(std::remove(dependents.begin(), dependents.end(), obj), dependents.end());
-    }
+    void addObserver(Observer* obs);
 
-    void addObserver(Observer* obs) {
-        observers.push_back(obs);
-    }
+    void removeObserver(Observer* obs);
 
-    void removeObserver(Observer* obs) {
-        observers.erase(std::remove(observers.begin(), observers.end(), obs), observers.end());
-    }
-
-    virtual ~GeoObject() {}
+    virtual ~GeoObject();
 };
 
 

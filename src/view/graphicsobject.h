@@ -14,9 +14,9 @@ protected:
 
 
 public:
-    bool selected() { return m_selected; }
-    QGraphicsScene* scene() { return m_scene; }
-    void setScene(QGraphicsScene* s) { m_scene = s; }
+    bool selected();
+    QGraphicsScene* scene();
+    void setScene(QGraphicsScene* s);
     virtual void attach() = 0;
     virtual GeoObject* model() = 0;
     virtual void setSelectedVisual(bool selected) = 0;

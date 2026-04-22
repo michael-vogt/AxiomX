@@ -17,73 +17,24 @@ private:
     QPen m_hoverPen = QPen(Qt::green, 2);
     QPen m_selectPen = QPen(Qt::red, 2);
 
-    void updateVisual() {
-        if (m_selected) {
-            setPen(m_selectPen);
-        } else if (m_hovered) {
-            setPen(m_hoverPen);
-        } else {
-            setPen(m_normalPen);
-        }
-
-        if (m_scene) {
-            m_scene->update();
-        }
-    }
+    void updateVisual();
 
 public:
-    GraphicsCircle(Circle* c, QGraphicsScene* s) : m_model(c) {
-        setScene(s);
-        setZValue(0);
-        updateVisual();
-    }
+    GraphicsCircle(Circle* c, QGraphicsScene* s);
 
-    void setHovered(bool h) {
-        m_hovered = h;
-        updateVisual();
-    }
+    void setHovered(bool h);
 
-    void setSelectedVisual(bool s) override {
-        m_selected = s;
-        updateVisual();
-    }
+    void setSelectedVisual(bool s) override;
 
-    void attach() override {
-        m_model->addObserver(this);
-        sync();
-    }
+    void attach() override;
 
-    std::vector<Point*> intersect(GraphicsCircle* other) {
-        std::vector<Point*> intersections;
+    std::vector<Point*> intersect(GraphicsCircle* other);
 
-        if (boundingRect().intersects(other->boundingRect())) {
-            return m_model->intersect(other->model());
-        }
+    std::vector<Point*> intersect(GraphicsLine* other);
 
-        return intersections;
-    }
+    Circle* model() override;
 
-    std::vector<Point*> intersect(GraphicsLine* other) {
-        std::vector<Point*> intersections;
-
-        if (boundingRect().intersects(other->boundingRect())) {
-            return m_model->intersect(other->model(), other->lineType());
-        }
-
-        return intersections;
-    }
-
-    Circle* model() override {
-        return m_model;
-    }
-
-    void sync() override {
-        double radius = m_model->radius();
-        //QPointF center(m_model->center()->x() - radius, m_model->center()->y() - radius);
-        QPointF center(m_model->x1() - radius, m_model->y1() - radius);
-        setRect(center.x(), center.y(), 2 * radius, 2 * radius);
-        //setLine(m_model->x1(), m_model->y1(), m_model->x2(), m_model->y2());
-    }
+    void sync() override;
 };
 
 #endif // GRAPHICSCIRCLE_H
