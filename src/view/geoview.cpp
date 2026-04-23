@@ -1,13 +1,15 @@
+#include <QScrollBar>
 #include "geoview.h"
 #include "../core/utility.h"
 
 GeoView::GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c) : QGraphicsView(s), m_commandManager(cmd), m_ctrl(c) {
     setMouseTracking(true);
     viewport()->setMouseTracking(true);
-    m_grid = new Grid(sceneRect().center(), sceneRect());
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    horizontalScrollBar()->setStyleSheet("QScrollBar {height:0px;}");
+    verticalScrollBar()->setStyleSheet("QScrollBar {width:0px;}");
 }
-
-Grid* GeoView::grid() { return m_grid; }
 
 Tool* GeoView::tool() {
     return m_tool;
@@ -44,14 +46,23 @@ void GeoView::keyPressEvent(QKeyEvent* event) {
     }
 
     if (event->key() == Qt::Key_NumberSign) {
-        for (QLineF line : m_grid->gridLines()) {
-            qDebug() << line;
-        }
+        m_showGrid = !m_showGrid;
+        viewport()->update();
     }
 
 }
 
 void GeoView::mouseMoveEvent(QMouseEvent* event) {
+    if (m_panning) {
+        QPoint delta = event->pos() - m_lastMousePos;
+        m_lastMousePos = event->pos();
+
+        horizontalScrollBar()->setValue(horizontalScrollBar()->value() - delta.x());
+        verticalScrollBar()->setValue(verticalScrollBar()->value() - delta.y());
+
+        viewport()->update();
+        return;
+    }
     QPointF pos = mapToScene(event->pos());
 
     bool toolCurrentlyWorking = (m_tool && m_tool->currentlyWorking());
@@ -68,39 +79,100 @@ void GeoView::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void GeoView::mousePressEvent(QMouseEvent* event) {
-    QPointF pos = mapToScene(event->pos());
+    if (event->button() == Qt::MiddleButton) {
+        m_panning = true;
+        m_lastMousePos = event->pos();
+        setCursor(Qt::ClosedHandCursor);
+        return;
+    }
 
     if (m_tool) {
-        m_tool->mousePress(pos);
+        m_tool->mousePress(mapToScene(event->pos()));
     }
 
     QGraphicsView::mousePressEvent(event);
 }
 
 void GeoView::mouseReleaseEvent(QMouseEvent* event) {
-    QPointF pos = mapToScene(event->pos());
+    if (event->button() == Qt::MiddleButton) {
+        m_panning = false;
+        setCursor(Qt::ArrowCursor);
+        viewport()->update();
+        return;
+    }
 
     if (m_tool) {
-        m_tool->mouseRelease(pos);
+        m_tool->mouseRelease(mapToScene(event->pos()));
     }
 
     QGraphicsView::mouseReleaseEvent(event);
 }
 
 void GeoView::wheelEvent(QWheelEvent* event) {
-    event->accept();
-    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    if (event->angleDelta().y() > 0) {
-        scale(1.25, 1.25);
-    } else {
-        scale(0.8, 0.8);
-    }
+    const double scaleFactor = 1.15;
+    QPointF scenePos = mapToScene(event->position().toPoint());
+    if (event->angleDelta().y() > 0)
+        scale(scaleFactor, scaleFactor);
+    else
+        scale(1/scaleFactor, 1/scaleFactor);
+
+    QPointF newScenePos = mapToScene(event->position().toPoint());
+    QPointF delta = newScenePos - scenePos;
+
+    translate(delta.x(), delta.y());
 }
 
 void GeoView::drawBackground(QPainter *painter, const QRectF &rect) {
-    if (!m_grid) return;
+    if (!m_showGrid) {
+        return;
+    }
 
-    setSceneRect(viewport()->contentsRect());
-    m_grid->update(sceneRect());
-    m_grid->paint(painter);
+    double scale = transform().m11();
+    double dynamicGrid = m_gridSize;
+
+    if (scale > 2) dynamicGrid /= 2;
+    if (scale < 0.5) dynamicGrid *= 2;
+
+    double left = std::floor(rect.left() / dynamicGrid) * dynamicGrid;
+    double top = std::floor(rect.top() / dynamicGrid) * dynamicGrid;
+
+    double x = left;
+    while (x < rect.right()) {
+        if (fmod(x, dynamicGrid * 5) == 0)
+            painter->setPen(QPen(Qt::gray, 0));
+        else
+            painter->setPen(QPen(QColor(220, 220, 220), 0));
+        painter->drawLine(QLineF(x, rect.top(), x, rect.bottom()));
+        x += dynamicGrid;
+    }
+
+    double y = top;
+    while (y < rect.bottom()) {
+        if (fmod(y, dynamicGrid * 5) == 0)
+            painter->setPen(QPen(Qt::gray, 0));
+        else
+            painter->setPen(QPen(QColor(220, 220, 220), 0));
+        painter->drawLine(QLineF(rect.left(), y, rect.right(), y));
+        y += dynamicGrid;
+    }
+
+    if (m_showAxes) {
+        drawAxes(painter, rect);
+    }
 }
+
+void GeoView::drawAxes(QPainter* painter, const QRectF& rect) {
+    QPen axisPen(Qt::black, 0);
+    painter->setPen(axisPen);
+
+    // Y-Achse (x = 0)
+    if (rect.left() <= 0 && rect.right() >= 0) {
+        painter->drawLine(QLineF(0, rect.top(), 0, rect.bottom()));
+    }
+
+    // X-Achse (y = 0)
+    if (rect.top() <= 0 && rect.bottom() >= 0) {
+        painter->drawLine(QLineF(rect.left(), 0, rect.right(), 0));
+    }
+}
+

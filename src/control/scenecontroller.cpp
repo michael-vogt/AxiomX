@@ -40,6 +40,10 @@ bool SceneController::pointExists(Point* p) {
     return false;
 }
 
+void SceneController::resize(const QSize& size, const QSize& oldSize) {
+    m_scene->setSceneRect(0, 0, size.width(), size.height());
+}
+
 GraphicsObject* SceneController::findObjectAt(const QPointF& pos, double radius) {
     // 1. Punkt
     for (auto g : m_graphics) {

@@ -3,7 +3,6 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
-#include "grid.h"
 #include "../command/commandmanager.h"
 #include "../control/interactionmanager.h"
 #include "../tools/tool.h"
@@ -14,13 +13,15 @@ private:
     InteractionManager* m_interaction = nullptr;
     CommandManager* m_commandManager = nullptr;
     SceneController* m_ctrl = nullptr;
-    Grid* m_grid = nullptr;
+    double m_gridSize = 50.0;
+    bool m_showGrid = true;
+    bool m_showAxes = true;
+    bool m_panning = false;
+    QPoint m_lastMousePos;
 
 public:
 
     GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c);
-
-    Grid* grid();
 
     Tool* tool();
 
@@ -40,6 +41,8 @@ protected:
     void wheelEvent(QWheelEvent* event) override;
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;
+
+    void drawAxes(QPainter* painter, const QRectF& rect);
 
 };
 

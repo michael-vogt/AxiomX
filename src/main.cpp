@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QGraphicsScene* scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 800, 600);
+    scene->setSceneRect(-5000, -5000, 10000, 10000);
 
     SceneController controller(scene);
     InteractionManager interaction(&controller);
