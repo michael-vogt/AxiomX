@@ -4,7 +4,7 @@
 #include <QPointF>
 #include "geoobject.h"
 #include "point.h"
-#include "../view/enums.h"
+#include "../core/enums.h"
 
 class Line : public GeoObject {
 private:

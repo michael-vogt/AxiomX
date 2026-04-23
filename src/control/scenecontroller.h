@@ -20,8 +20,6 @@ public:
 
     bool pointExists(Point* p);
 
-    void resize(const QSize& size, const QSize& oldSize);
-
     GraphicsObject* findObjectAt(const QPointF& pos, double radius = 10.0);
 
     Point* findPointNear(const QPointF& pos, double radius = 10.0);

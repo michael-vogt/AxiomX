@@ -2,7 +2,7 @@
 #define INFINITELINEITEM_H
 
 #include <QGraphicsLineItem>
-#include "../view/enums.h"
+#include "../core/enums.h"
 
 class InfiniteLineItem : public QGraphicsLineItem {
 private:

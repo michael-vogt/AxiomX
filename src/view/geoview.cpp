@@ -9,6 +9,7 @@ GeoView::GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c) : Q
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     horizontalScrollBar()->setStyleSheet("QScrollBar {height:0px;}");
     verticalScrollBar()->setStyleSheet("QScrollBar {width:0px;}");
+    m_snap = new SnapManager(m_ctrl);
 }
 
 Tool* GeoView::tool() {
@@ -63,11 +64,21 @@ void GeoView::mouseMoveEvent(QMouseEvent* event) {
         viewport()->update();
         return;
     }
+
     QPointF pos = mapToScene(event->pos());
+    if (m_snap) {
+        auto result = m_snap->snap(pos);
+        pos = result.pos;
+        m_hasSnap = result.snapped;
+        m_lastSnap = result.pos;
+    } else {
+        m_hasSnap = false;
+    }
 
     bool toolCurrentlyWorking = (m_tool && m_tool->currentlyWorking());
 
     if (m_interaction && !toolCurrentlyWorking) {
+        //QPointF snapped = m_snap ? m_snap->snap(pos) : pos;
         m_interaction->updateHover(pos);
     }
 
@@ -76,6 +87,7 @@ void GeoView::mouseMoveEvent(QMouseEvent* event) {
     }
 
     QGraphicsView::mouseMoveEvent(event);
+    viewport()->update();
 }
 
 void GeoView::mousePressEvent(QMouseEvent* event) {
@@ -86,8 +98,12 @@ void GeoView::mousePressEvent(QMouseEvent* event) {
         return;
     }
 
+    QPointF pos = mapToScene(event->pos());
+    /*if (m_snap)
+        pos = m_snap->snap(pos);*/
+
     if (m_tool) {
-        m_tool->mousePress(mapToScene(event->pos()));
+        m_tool->mousePress(pos);
     }
 
     QGraphicsView::mousePressEvent(event);
@@ -101,8 +117,12 @@ void GeoView::mouseReleaseEvent(QMouseEvent* event) {
         return;
     }
 
+    QPointF pos = mapToScene(event->pos());
+    /*if (m_snap)
+        pos = m_snap->snap(pos);*/
+
     if (m_tool) {
-        m_tool->mouseRelease(mapToScene(event->pos()));
+        m_tool->mouseRelease(pos);
     }
 
     QGraphicsView::mouseReleaseEvent(event);
@@ -130,8 +150,8 @@ void GeoView::drawBackground(QPainter *painter, const QRectF &rect) {
     double scale = transform().m11();
     double dynamicGrid = m_gridSize;
 
-    if (scale > 2) dynamicGrid /= 2;
-    if (scale < 0.5) dynamicGrid *= 2;
+    //if (scale > 2) dynamicGrid /= 2;
+    //if (scale < 0.5) dynamicGrid *= 2;
 
     double left = std::floor(rect.left() / dynamicGrid) * dynamicGrid;
     double top = std::floor(rect.top() / dynamicGrid) * dynamicGrid;
@@ -160,6 +180,15 @@ void GeoView::drawBackground(QPainter *painter, const QRectF &rect) {
         drawAxes(painter, rect);
     }
 }
+
+void GeoView::drawForeground(QPainter *painter, const QRectF &rect) {
+    if (!m_hasSnap) return;
+
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(Qt::red);
+
+    painter->drawEllipse(m_lastSnap, 4, 4);
+};
 
 void GeoView::drawAxes(QPainter* painter, const QRectF& rect) {
     QPen axisPen(Qt::black, 0);
