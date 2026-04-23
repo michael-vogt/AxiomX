@@ -2,11 +2,12 @@
 #define CIRCLE_H
 
 #include "geoobject.h"
-#include "point.h"
 #include "line.h"
-#include <QLineF>
+#include "point.h"
 
 class Circle : public GeoObject {
+private:
+    void updateCircle();
 protected:
     Point* m_center;
     Point* m_pointOnCircle;
@@ -17,17 +18,11 @@ protected:
 public:
     Circle(Point* center, Point* pointOnCircle);
 
-    Point* center();
-
     double radius();
 
     double x1();
 
-    double x2();
-
     double y1();
-
-    double y2();
 
     bool pointOnCircle(const QPointF& p, double delta = 0.0);
 

@@ -4,13 +4,13 @@
 #include "resultcommand.h"
 #include "../control/scenecontroller.h"
 #include "../view/graphicscircle.h"
+#include "../view/graphicspoint.h"
 
 class CreateCircleCommand : public ResultCommand<Circle*, GraphicsCircle*> {
 public:
     SceneController* m_ctrl;
     GraphicsPoint* m_center;
     GraphicsPoint* m_pointOnCircle;
-    //double m_radius;
 
     Circle* m_circle = nullptr;
     GraphicsCircle* m_gcircle = nullptr;

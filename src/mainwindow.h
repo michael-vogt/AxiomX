@@ -2,12 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QToolBar>
-#include <QActionGroup>
-#include "control/control.h"
-#include "view/view.h"
-#include "tools/tools.h"
-//#include "core/utility.h"
+
+#include "command/commandmanager.h"
+#include "control/interactionmanager.h"
+#include "control/scenecontroller.h"
+#include "control/selectionmanager.h"
+#include "view/geoview.h"
 
 class MainWindow : public QMainWindow {
 public:

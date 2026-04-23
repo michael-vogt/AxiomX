@@ -1,12 +1,8 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include "infinitelineitem.h"
-#include "../view/graphicscircle.h"
-#include "../view/graphicsline.h"
-#include "../view/graphicspoint.h"
-
-double distancePointToSegment(const QPointF& p, const QPointF& a, const QPointF& b);
+#include "../view/graphicsobject.h"
+#include "../view/enums.h"
 
 template<typename Base, typename T>
 inline bool instanceOf(T* ptr);

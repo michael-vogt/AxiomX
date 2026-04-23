@@ -43,7 +43,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/graphicscircle.h
         src/command/createcirclecommand.h
         src/tools/intersectiontool.h
-        src/view/grid.h
+
         src/command/commandmanager.cpp
         src/command/createcirclecommand.cpp
         src/command/createlinecommand.cpp
@@ -70,9 +70,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/graphicsline.cpp
         src/view/graphicsobject.cpp
         src/view/graphicspoint.cpp
-        src/view/grid.cpp
+
         src/view/observer.cpp
         src/mainwindow.cpp
+        src/view/enums.h
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET AxiomX APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

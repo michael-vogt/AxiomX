@@ -1,3 +1,4 @@
+#include <QPainter>
 #include "infinitelineitem.h"
 
 InfiniteLineItem::InfiniteLineItem(LineType lineType) : m_lineType(lineType) {}

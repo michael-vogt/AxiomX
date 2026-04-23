@@ -1,4 +1,6 @@
 #include "circletool.h"
+#include "../command/createcirclecommand.h"
+#include "../command/createpointcommand.h"
 
 CircleTool::CircleTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm) : m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
 
@@ -40,7 +42,6 @@ void CircleTool::mousePress(const QPointF& pos) {
     } else {
         auto cmd = new CreateCircleCommand(m_ctrl, m_first, p);
         m_command->execute(cmd);
-        GraphicsCircle* circle = cmd->getResultGraphicsObject();
 
         if (m_preview) {
             m_scene->removeItem(m_preview);

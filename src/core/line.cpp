@@ -1,17 +1,10 @@
+#include <QLineF>
 #include "line.h"
 
 Line::Line(Point* a, Point* b) : m_p1(a), m_p2(b) {
     m_p1->addDependent(this);
     m_p2->addDependent(this);
-    update();
-}
-
-Point* Line::p1() {
-    return m_p1;
-}
-
-Point* Line::p2() {
-    return m_p2;
+    updateLine();
 }
 
 double Line::x1() {
@@ -71,7 +64,6 @@ std::vector<Point*> Line::intersect(Line* other, LineType lineTypeOther, LineTyp
     }
 
     double t = ((other->x1() - x1()) * dy2 - (other->y1() - y1()) * dx2) / denominator;
-    double s = ((other->x1() - x1()) * dy1 - (other->y1() - y1()) * dx1) / denominator;
 
     QPointF S(x1() + t * (x2() - x1()), y1() + t * (y2() - y1()));
     bool SinThis = contains(S, lineTypeThis);
@@ -84,6 +76,10 @@ std::vector<Point*> Line::intersect(Line* other, LineType lineTypeOther, LineTyp
 }
 
 void Line::update() {
+    updateLine();
+}
+
+void Line::updateLine() {
     m_x1 = m_p1->x();
     m_y1 = m_p1->y();
     m_x2 = m_p2->x();
@@ -91,17 +87,6 @@ void Line::update() {
 }
 
 double Line::distanceToPoint(const QPointF& pos, LineType lineType) {
-    /*double x0 = pos.x();
-        double y0 = pos.y();
-
-        double dX2X1 = m_x2 - m_x1;
-        double dY1Y0 = m_y1 - y0;
-        double dX1X0 = m_x1 - x0;
-        double dY2Y1 = m_y2 - m_y1;
-        double numerator = std::abs(dX2X1 * dY1Y0 - dX1X0 * dY2Y1);
-        double denominator = std::sqrt(dX2X1 * dX2X1 + dY2Y1 * dY2Y1);
-
-        return numerator / denominator;*/
     QPointF a(m_p1->x(), m_p1->y());
     QPointF b(m_p2->x(), m_p2->y());
 

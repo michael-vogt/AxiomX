@@ -2,13 +2,7 @@
 #define INFINITELINEITEM_H
 
 #include <QGraphicsLineItem>
-#include <QPainter>
-
-enum LineType {
-    SEGMENT = 0,
-    RAY = 1,
-    LINE = 2
-};
+#include "../view/enums.h"
 
 class InfiniteLineItem : public QGraphicsLineItem {
 private:

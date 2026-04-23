@@ -1,9 +1,6 @@
 #ifndef GRAPHICSCIRCLE_H
 #define GRAPHICSCIRCLE_H
 
-#include <QGraphicsEllipseItem>
-#include <QGraphicsScene>
-#include <QPen>
 #include "graphicsobject.h"
 #include "graphicsline.h"
 #include "../core/circle.h"

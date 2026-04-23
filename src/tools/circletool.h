@@ -3,9 +3,8 @@
 
 #include "tool.h"
 #include "../control/interactionmanager.h"
+#include "../control/scenecontroller.h"
 #include "../command/commandmanager.h"
-#include "../command/createpointcommand.h"
-#include "../command/createcirclecommand.h"
 
 class CircleTool : public Tool {
 private:

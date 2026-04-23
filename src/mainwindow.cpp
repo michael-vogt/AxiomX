@@ -1,4 +1,13 @@
+#include <QToolBar>
+#include <QActionGroup>
 #include "mainwindow.h"
+#include "core/utility.h"
+#include "tools/circletool.h"
+#include "tools/intersectiontool.h"
+#include "tools/linetool.h"
+#include "tools/movetool.h"
+#include "tools/pointtool.h"
+#include "tools/selecttool.h"
 
 MainWindow::MainWindow(SceneController* controller, InteractionManager* interaction, SelectionManager* selection, CommandManager* commandManager) {
     // Scene + View
@@ -8,7 +17,7 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     m_view->setInteractionManager(interaction);
     setCentralWidget(m_view);
 
-    PointTool* pointTool = new PointTool(controller, commandManager, m_view->grid());
+    PointTool* pointTool = new PointTool(controller, commandManager);
     LineTool* lineTool = new LineTool(controller, interaction, scene, commandManager);
     MoveTool* moveTool = new MoveTool(controller);
     SelectTool* selectTool = new SelectTool(controller, selection, scene);

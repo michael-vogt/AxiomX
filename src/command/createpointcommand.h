@@ -3,6 +3,7 @@
 
 #include "resultcommand.h"
 #include "../control/scenecontroller.h"
+#include "../view/graphicspoint.h"
 
 class CreatePointCommand : public ResultCommand<Point*, GraphicsPoint*> {
 public:

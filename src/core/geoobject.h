@@ -1,7 +1,6 @@
 #ifndef GEOOBJECT_H
 #define GEOOBJECT_H
 
-#include <algorithm>
 #include <vector>
 #include "../view/observer.h"
 
@@ -17,11 +16,7 @@ public:
 
     void addDependent(GeoObject* obj);
 
-    void removeDependent(GeoObject* obj);
-
     void addObserver(Observer* obs);
-
-    void removeObserver(Observer* obs);
 
     virtual ~GeoObject();
 };

@@ -1,11 +1,9 @@
 #ifndef GRAPHICSLINE_H
 #define GRAPHICSLINE_H
 
-#include <QGraphicsLineItem>
-#include <QGraphicsWidget>
-#include <QGraphicsScene>
-#include "../core/core.h"
 #include "graphicsobject.h"
+#include "../core/infinitelineitem.h"
+#include "../core/line.h"
 
 class GraphicsLine : public InfiniteLineItem, public GraphicsObject {
 private:

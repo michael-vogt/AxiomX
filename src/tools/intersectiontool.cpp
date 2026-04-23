@@ -1,4 +1,7 @@
 #include "intersectiontool.h"
+#include "../command/createpointcommand.h"
+#include "../view/graphicscircle.h"
+#include "../view/graphicsline.h"
 
 IntersectionTool::IntersectionTool(SceneController* c, CommandManager* cm) : m_ctrl(c), m_command(cm) {}
 
@@ -26,6 +29,8 @@ void IntersectionTool::mousePress(const QPointF& pos) {
 }
 
 void IntersectionTool::findIntesections(GraphicsObject* obj1, GraphicsObject* obj2) {
+    if (!obj1 || !obj2) return;
+
     auto gl1 = dynamic_cast<GraphicsLine*>(obj1);
     auto gc1 = dynamic_cast<GraphicsCircle*>(obj1);
 
