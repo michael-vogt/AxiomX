@@ -1,13 +1,11 @@
 #include "linetool.h"
+#include "../command/createlinecommand.h"
+#include "../command/createpointcommand.h"
 
 LineTool::LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm) : m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
 
 LineType LineTool::lineType() {
     return m_lineType;
-}
-
-void LineTool::setLineType(LineType lineType) {
-    m_lineType = lineType;
 }
 
 void LineTool::toggleLineType() {
@@ -64,7 +62,6 @@ void LineTool::mousePress(const QPointF &pos) {
     } else {
         auto cmd = new CreateLineCommand(m_ctrl, m_first, p, m_lineType);
         m_command->execute(cmd);
-        GraphicsLine* line = cmd->getResultGraphicsObject();
 
         if (m_preview) {
             m_scene->removeItem(m_preview);

@@ -1,12 +1,9 @@
 #ifndef GRAPHICSPOINT_H
 #define GRAPHICSPOINT_H
 
-#include <QEvent>
 #include <QGraphicsEllipseItem>
-#include <QGraphicsScene>
-#include "../core/core.h"
-#include "observer.h"
 #include "graphicsobject.h"
+#include "../core/point.h"
 
 class GraphicsPoint : public QGraphicsEllipseItem, public GraphicsObject {
 private:
@@ -35,8 +32,6 @@ public:
     Point* model() override;
 
     void sync() override;
-
-    bool equals(GraphicsPoint* other);
 };
 
 #endif // GRAPHICSPOINT_H

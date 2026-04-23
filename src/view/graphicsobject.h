@@ -2,10 +2,8 @@
 #define GRAPHICSOBJECT_H
 
 #include <QGraphicsScene>
-//#include "../core/core.h"
 #include "../core/geoobject.h"
 #include "observer.h"
-//#include "../control/scenecontroller.h"
 
 class GraphicsObject : public Observer {
 protected:

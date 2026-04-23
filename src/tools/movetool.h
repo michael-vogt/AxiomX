@@ -3,6 +3,7 @@
 
 #include "tool.h"
 #include "../control/scenecontroller.h"
+#include "../core/point.h"
 
 class MoveTool : public Tool {
 private:

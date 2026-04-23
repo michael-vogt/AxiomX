@@ -19,16 +19,8 @@ void GeoObject::addDependent(GeoObject* obj) {
     dependents.push_back(obj);
 }
 
-void GeoObject::removeDependent(GeoObject* obj) {
-    dependents.erase(std::remove(dependents.begin(), dependents.end(), obj), dependents.end());
-}
-
 void GeoObject::addObserver(Observer* obs) {
     observers.push_back(obs);
-}
-
-void GeoObject::removeObserver(Observer* obs) {
-    observers.erase(std::remove(observers.begin(), observers.end(), obs), observers.end());
 }
 
 GeoObject::~GeoObject() {}

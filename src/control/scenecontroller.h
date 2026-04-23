@@ -3,10 +3,8 @@
 
 #include <QGraphicsScene>
 #include <vector>
-//#include "../view/geoview.h"
-#include "../view/graphicspoint.h"
-#include "../view/graphicsline.h"
-#include "../view/graphicscircle.h"
+#include "../core/point.h"
+#include "../view/graphicsobject.h"
 
 class SceneController {
 private:
@@ -20,13 +18,7 @@ public:
 
     void deleteSelected();
 
-    GraphicsPoint* createPoint(double x, double y, bool isTemporaryPoint = false);
-
-    GraphicsPoint* graphicsPointAlreadyExists(GraphicsPoint* gpToCheck);
-
     bool pointExists(Point* p);
-
-    GraphicsLine* createLine(Point* a, Point* b);
 
     GraphicsObject* findObjectAt(const QPointF& pos, double radius = 10.0);
 

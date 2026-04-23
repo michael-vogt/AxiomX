@@ -4,13 +4,11 @@
 #include <QPointF>
 #include "geoobject.h"
 #include "point.h"
-#include "infinitelineitem.h"
-//#include "utility.h"
-//#include "../view/graphicspoint.h"
-
-//double distancePointToSegment(const QPointF& p, const QPointF& a, const QPointF& b);
+#include "../view/enums.h"
 
 class Line : public GeoObject {
+private:
+    void updateLine();
 protected:
     Point* m_p1;
     Point* m_p2;
@@ -20,10 +18,6 @@ protected:
 
 public:
     Line(Point* a, Point* b);
-
-    Point* p1();
-
-    Point* p2();
 
     double x1();
 

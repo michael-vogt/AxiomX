@@ -1,4 +1,5 @@
 #include "pointtool.h"
+#include "../command/createpointcommand.h"
 
 PointTool::PointTool(SceneController* c, CommandManager* cm, Grid* g) : m_ctrl(c), m_commandManager(cm), m_grid(g) {}
 

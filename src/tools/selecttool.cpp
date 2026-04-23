@@ -1,4 +1,8 @@
+#include <QApplication>
 #include "selecttool.h"
+#include "../view/graphicscircle.h"
+#include "../view/graphicsline.h"
+#include "../view/graphicspoint.h"
 
 SelectTool::SelectTool(SceneController* c, SelectionManager* s, QGraphicsScene* sc) : m_ctrl(c), m_selection(s), m_scene(sc) {
     m_dragRectPen.setColor(Qt::darkGray);

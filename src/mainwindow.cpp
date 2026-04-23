@@ -1,4 +1,13 @@
+#include <QToolBar>
+#include <QActionGroup>
 #include "mainwindow.h"
+#include "core/utility.h"
+#include "tools/circletool.h"
+#include "tools/intersectiontool.h"
+#include "tools/linetool.h"
+#include "tools/movetool.h"
+#include "tools/pointtool.h"
+#include "tools/selecttool.h"
 
 MainWindow::MainWindow(SceneController* controller, InteractionManager* interaction, SelectionManager* selection, CommandManager* commandManager) {
     // Scene + View

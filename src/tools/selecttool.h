@@ -1,7 +1,6 @@
 #ifndef SELECTTOOL_H
 #define SELECTTOOL_H
 
-#include <QApplication>
 #include "tool.h"
 #include "../control/scenecontroller.h"
 #include "../control/selectionmanager.h"

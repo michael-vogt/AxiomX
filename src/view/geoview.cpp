@@ -1,4 +1,5 @@
 #include "geoview.h"
+#include "../core/utility.h"
 
 GeoView::GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c) : QGraphicsView(s), m_commandManager(cmd), m_ctrl(c) {
     setMouseTracking(true);

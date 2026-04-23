@@ -1,9 +1,6 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include <QDebug>
-#include <QLineF>
-#include <QRectF>
 #include <QPainter>
 
 class Grid {

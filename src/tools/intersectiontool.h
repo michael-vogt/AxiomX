@@ -5,7 +5,6 @@
 #include "../view/graphicsobject.h"
 #include "../control/scenecontroller.h"
 #include "../command/commandmanager.h"
-#include "../command/createpointcommand.h"
 
 class IntersectionTool : public Tool {
 private:

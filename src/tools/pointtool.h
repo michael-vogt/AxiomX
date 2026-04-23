@@ -4,7 +4,6 @@
 #include "tool.h"
 #include "../control/scenecontroller.h"
 #include "../command/commandmanager.h"
-#include "../command/createpointcommand.h"
 #include "../view/grid.h"
 
 class PointTool : public Tool {

@@ -3,10 +3,10 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
-#include "../tools/tools.h"
-#include "../control/interactionmanager.h"
-#include "../core/utility.h"
 #include "grid.h"
+#include "../command/commandmanager.h"
+#include "../control/interactionmanager.h"
+#include "../tools/tool.h"
 
 class GeoView : public QGraphicsView {
 private:

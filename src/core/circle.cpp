@@ -1,3 +1,4 @@
+#include <QLineF>
 #include "circle.h"
 
 Circle::Circle(Point* center, Point* pointOnCircle) : m_center(center), m_pointOnCircle(pointOnCircle) {
@@ -6,11 +7,7 @@ Circle::Circle(Point* center, Point* pointOnCircle) : m_center(center), m_pointO
     m_radius = QLineF(p1, p2).length();
     m_center->addDependent(this);
     m_pointOnCircle->addDependent(this);
-    update();
-}
-
-Point* Circle::center() {
-    return m_center;
+    updateCircle();
 }
 
 double Circle::radius() {
@@ -21,16 +18,8 @@ double Circle::x1() {
     return m_x1;
 }
 
-double Circle::x2() {
-    return m_x2;
-}
-
 double Circle::y1() {
     return m_y1;
-}
-
-double Circle::y2() {
-    return m_y2;
 }
 
 bool Circle::pointOnCircle(const QPointF& p, double delta) {
@@ -115,6 +104,10 @@ std::vector<Point*> Circle::intersect(Line* other, LineType lineType) {
 }
 
 void Circle::update() {
+    updateCircle();
+}
+
+void Circle::updateCircle() {
     m_x1 = m_center->x();
     m_y1 = m_center->y();
     m_x2 = m_pointOnCircle->x();

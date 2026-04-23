@@ -3,6 +3,8 @@
 
 #include "resultcommand.h"
 #include "../control/scenecontroller.h"
+#include "../view/graphicsline.h"
+#include "../view/graphicspoint.h"
 
 class CreateLineCommand : public ResultCommand<Line*, GraphicsLine*> {
 public:

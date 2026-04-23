@@ -52,8 +52,3 @@ void GraphicsPoint::sync() {
     setPos(m_model->x(), m_model->y());
     m_updating = false;
 }
-
-bool GraphicsPoint::equals(GraphicsPoint* other) {
-    if (!other || !m_model) return false;
-    return (m_model->x() == other->model()->x() && m_model->y() == other->model()->y());
-}

@@ -1,10 +1,10 @@
 #ifndef INTERACTIONMANAGER_H
 #define INTERACTIONMANAGER_H
 
-/*#include "../view/view.h"
-#include "scenecontroller.h"*/
 #include "scenecontroller.h"
 #include "../view/graphicscircle.h"
+#include "../view/graphicsline.h"
+#include "../view/graphicspoint.h"
 
 class InteractionManager {
 public:

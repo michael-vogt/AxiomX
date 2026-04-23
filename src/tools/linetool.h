@@ -1,12 +1,10 @@
 #ifndef LINETOOL_H
 #define LINETOOL_H
 
-#include <iostream>
+#include "tool.h"
 #include "../control/interactionmanager.h"
+#include "../control/scenecontroller.h"
 #include "../command/commandmanager.h"
-#include "../command/createpointcommand.h"
-#include "../command/createlinecommand.h"
-#include "../tools/tool.h"
 
 class LineTool : public Tool {
 private:
@@ -24,8 +22,6 @@ public:
     LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm);
 
     LineType lineType();
-
-    void setLineType(LineType lineType);
 
     void toggleLineType();
 

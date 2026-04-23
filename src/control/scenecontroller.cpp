@@ -1,4 +1,6 @@
 #include "scenecontroller.h"
+#include "../view/graphicscircle.h"
+#include "../view/graphicspoint.h"
 
 SceneController::SceneController(QGraphicsScene* s) : m_scene(s) {}
 
@@ -27,31 +29,6 @@ void SceneController::deleteSelected() {
     for (auto gp : selectedPoints) remove(gp);
 }
 
-GraphicsPoint* SceneController::createPoint(double x, double y, bool isTemporaryPoint) {
-    GraphicsPoint* gp = dynamic_cast<GraphicsPoint*>(findObjectAt(QPointF(x, y)));
-    if (!gp || isTemporaryPoint) {
-        Point* p = new Point(x, y);
-        auto gp = new GraphicsPoint(p, m_scene);
-
-
-        m_scene->addItem(gp);
-        gp->attach();
-
-        m_graphics.push_back(gp);
-    }
-    return gp;
-}
-
-GraphicsPoint* SceneController::graphicsPointAlreadyExists(GraphicsPoint* gpToCheck) {
-    for (auto g : m_graphics) {
-        auto gp = dynamic_cast<GraphicsPoint*>(g);
-        if (!gp) continue;
-
-        if (gp != gpToCheck && gp->equals(gpToCheck)) return gp;
-    }
-    return nullptr;
-}
-
 bool SceneController::pointExists(Point* p) {
     for (auto g : m_graphics) {
         auto gp = dynamic_cast<GraphicsPoint*>(g);
@@ -61,17 +38,6 @@ bool SceneController::pointExists(Point* p) {
         if (q->x() == p->x() && q->y() == p->y()) return true;
     }
     return false;
-}
-
-GraphicsLine* SceneController::createLine(Point* a, Point* b) {
-    Line* l = new Line(a, b);
-    auto gl = new GraphicsLine(l, m_scene);
-
-    m_scene->addItem(gl);
-    gl->attach();
-
-    m_graphics.push_back(gl);
-    return gl;
 }
 
 GraphicsObject* SceneController::findObjectAt(const QPointF& pos, double radius) {
