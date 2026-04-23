@@ -73,7 +73,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         src/view/observer.cpp
         src/mainwindow.cpp
-        src/view/enums.h
+        src/core/enums.h
+        src/core/structs.h
+        src/control/snapmanager.h src/control/snapmanager.cpp
 
     )
 # Define target properties for Android with Qt 6 as:

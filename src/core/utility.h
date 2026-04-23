@@ -2,7 +2,7 @@
 #define UTILITY_H
 
 #include "../view/graphicsobject.h"
-#include "../view/enums.h"
+#include "../core/enums.h"
 
 template<typename Base, typename T>
 inline bool instanceOf(T* ptr);

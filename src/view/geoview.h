@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include "../command/commandmanager.h"
 #include "../control/interactionmanager.h"
+#include "../control/snapmanager.h"
 #include "../tools/tool.h"
 
 class GeoView : public QGraphicsView {
@@ -18,6 +19,9 @@ private:
     bool m_showAxes = true;
     bool m_panning = false;
     QPoint m_lastMousePos;
+    SnapManager* m_snap = nullptr;
+    QPointF m_lastSnap;
+    bool m_hasSnap = false;
 
 public:
 
@@ -41,6 +45,8 @@ protected:
     void wheelEvent(QWheelEvent* event) override;
 
     void drawBackground(QPainter *painter, const QRectF &rect) override;
+
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
 
     void drawAxes(QPainter* painter, const QRectF& rect);
 
