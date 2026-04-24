@@ -16,6 +16,11 @@ void LineTool::toggleLineType() {
     } else {
         m_lineType = LineType::SEGMENT;
     }
+
+    if (m_preview) {
+        m_preview->setLineType(m_lineType);
+        m_scene->update();
+    }
 }
 
 void LineTool::resetTool() {
