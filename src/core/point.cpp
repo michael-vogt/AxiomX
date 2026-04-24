@@ -1,6 +1,14 @@
 #include "point.h"
 
-Point::Point(double x, double y) : m_x(x), m_y(y) {}
+Point::Point(double x, double y) : m_id(-1), m_x(x), m_y(y) {}
+
+int Point::id() {
+    return m_id;
+}
+
+void Point::setId(int id) {
+    m_id = id;
+}
 
 double Point::x() {
     return m_x;

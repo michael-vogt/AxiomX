@@ -43,6 +43,11 @@ void GeoView::keyPressEvent(QKeyEvent* event) {
             this->scene()->update();
         } else if (event->key() == Qt::Key_V) {
             printGraphicsObjectsToConsole(m_ctrl->graphics());
+        } else if (event->key() == Qt::Key_S) {
+            save(m_ctrl, "scene.json");
+        } else if (event->key() == Qt::Key_O) {
+            load(m_ctrl, "scene.json");
+            scene()->update();
         }
     }
 

@@ -19,6 +19,10 @@ protected:
 public:
     Line(Point* a, Point* b);
 
+    Point* p1();
+
+    Point* p2();
+
     double x1();
 
     double x2();

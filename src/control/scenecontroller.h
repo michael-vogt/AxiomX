@@ -12,6 +12,8 @@ private:
     std::vector<GraphicsObject*> m_graphics;
 
 public:
+    int m_nextId = 0;
+
     SceneController(QGraphicsScene* s);
 
     void remove(GraphicsObject* g);

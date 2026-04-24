@@ -6,9 +6,14 @@
 class Point : public GeoObject {
 protected:
     double m_x, m_y;
+    int m_id;
 
 public:
     Point(double x, double y);
+
+    int id();
+
+    void setId(int id);
 
     double x();
 

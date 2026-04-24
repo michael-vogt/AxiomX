@@ -13,6 +13,8 @@ void CreatePointCommand::execute() {
         m_gpoint = new GraphicsPoint(m_point, m_ctrl->scene());
     }
 
+    m_point->setId(m_ctrl->m_nextId);
+    m_ctrl->m_nextId++;
     m_ctrl->scene()->addItem(m_gpoint);
     m_gpoint->attach();
 

@@ -7,6 +7,14 @@ Line::Line(Point* a, Point* b) : m_p1(a), m_p2(b) {
     updateLine();
 }
 
+Point* Line::p1() {
+    return m_p1;
+}
+
+Point* Line::p2() {
+    return m_p2;
+}
+
 double Line::x1() {
     return m_x1;
 }
