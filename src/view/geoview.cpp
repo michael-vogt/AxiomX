@@ -155,33 +155,27 @@ void GeoView::drawBackground(QPainter *painter, const QRectF &rect) {
         return;
     }
 
-    double scale = transform().m11();
-    double dynamicGrid = m_gridSize;
-
-    //if (scale > 2) dynamicGrid /= 2;
-    //if (scale < 0.5) dynamicGrid *= 2;
-
-    double left = std::floor(rect.left() / dynamicGrid) * dynamicGrid;
-    double top = std::floor(rect.top() / dynamicGrid) * dynamicGrid;
+    double left = std::floor(rect.left() / m_gridSize) * m_gridSize;
+    double top = std::floor(rect.top() / m_gridSize) * m_gridSize;
 
     double x = left;
     while (x < rect.right()) {
-        if (fmod(x, dynamicGrid * 5) == 0)
+        if (fmod(x, m_gridSize * 5) == 0)
             painter->setPen(QPen(Qt::gray, 0));
         else
             painter->setPen(QPen(QColor(220, 220, 220), 0));
         painter->drawLine(QLineF(x, rect.top(), x, rect.bottom()));
-        x += dynamicGrid;
+        x += m_gridSize;
     }
 
     double y = top;
     while (y < rect.bottom()) {
-        if (fmod(y, dynamicGrid * 5) == 0)
+        if (fmod(y, m_gridSize * 5) == 0)
             painter->setPen(QPen(Qt::gray, 0));
         else
             painter->setPen(QPen(QColor(220, 220, 220), 0));
         painter->drawLine(QLineF(rect.left(), y, rect.right(), y));
-        y += dynamicGrid;
+        y += m_gridSize;
     }
 
     if (m_showAxes) {
