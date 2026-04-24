@@ -3,7 +3,7 @@
 #include "../view/graphicscircle.h"
 #include "../view/graphicsline.h"
 
-IntersectionTool::IntersectionTool(SceneController* c, CommandManager* cm) : m_ctrl(c), m_command(cm) {}
+IntersectionTool::IntersectionTool(SceneController* c, CommandManager* cm) : Tool(nullptr), m_ctrl(c), m_command(cm) {}
 
 void IntersectionTool::resetTool() {
     if (m_object1) {

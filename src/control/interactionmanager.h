@@ -21,7 +21,6 @@ public:
 
     void updateHover(const QPointF& pos);
 
-    GraphicsPoint* getSnappedPoint(const QPointF& pos);
 };
 
 #endif // INTERACTIONMANAGER_H

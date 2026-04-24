@@ -2,7 +2,7 @@
 #include "../command/createcirclecommand.h"
 #include "../command/createpointcommand.h"
 
-CircleTool::CircleTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm) : m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
+CircleTool::CircleTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm, SnapManager* sm) : Tool(sm), m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
 
 void CircleTool::resetTool() {
     bool update = (m_preview || m_first);
@@ -25,9 +25,11 @@ void CircleTool::resetTool() {
 }
 
 void CircleTool::mousePress(const QPointF& pos) {
-    GraphicsPoint* p = m_interaction->getSnappedPoint(pos);
-    if (!p) {
-        auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y());
+    SnapResult res = m_snap->snap(pos);
+    GraphicsPoint* p = res.gp;
+    //GraphicsPoint* p = m_interaction->getSnappedPoint(pos);
+    if (!p) {        
+        auto cmd = new CreatePointCommand(m_ctrl, res.pos.x(), res.pos.y());
         m_command->execute(cmd);
         p = cmd->getResultGraphicsObject();
     }
@@ -59,10 +61,14 @@ void CircleTool::mouseMove(const QPointF& pos) {
     if (!m_first) return;
 
     QPointF target = pos;
-    GraphicsPoint* snap = m_interaction->getSnappedPoint(pos);
+    SnapResult res = m_snap->snap(pos);
+    if (res.gp) {
+        target = res.pos;
+    }
+    /*GraphicsPoint* snap = m_interaction->getSnappedPoint(pos);
     if (snap) {
         target = QPointF(snap->model()->x(), snap->model()->y());
-    }
+    }*/
 
     if (m_preview) {
         QPointF center(m_first->model()->x(), m_first->model()->y());

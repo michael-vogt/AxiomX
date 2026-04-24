@@ -1,6 +1,6 @@
 #include "movetool.h"
 
-MoveTool::MoveTool(SceneController* c) : m_ctrl(c) {}
+MoveTool::MoveTool(SceneController* c) : Tool(nullptr), m_ctrl(c) {}
 
 void MoveTool::resetTool() {}
 

@@ -14,12 +14,12 @@ private:
     CommandManager* m_command;
 
     GraphicsPoint* m_first = nullptr;
-    InfiniteLineItem* m_preview = nullptr;
+    GraphicsLine* m_preview = nullptr;
 
     LineType m_lineType = LineType::LINE;
 
 public:
-    LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm);
+    LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm, SnapManager* sm);
 
     LineType lineType();
 

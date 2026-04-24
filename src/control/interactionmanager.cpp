@@ -58,19 +58,3 @@ void InteractionManager::updateHover(const QPointF& pos) {
         }
     }
 }
-
-GraphicsPoint* InteractionManager::getSnappedPoint(const QPointF& pos) {
-    m_snappedPoint = nullptr;
-
-    for (auto g : m_ctrl->graphics()) {
-        auto gp = dynamic_cast<GraphicsPoint*>(g);
-        if (!gp) continue;
-
-        if (QLineF(gp->pos(), pos).length() < 10.0) {
-            gp->setScene(g->scene());
-            m_snappedPoint = gp;
-            return gp;
-        }
-    }
-    return nullptr;
-}

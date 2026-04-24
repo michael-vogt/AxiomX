@@ -27,6 +27,10 @@ public:
 
     GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c);
 
+    SnapManager* snapManager();
+
+    void setSnapManager(SnapManager* sm);
+
     Tool* tool();
 
     void setTool(Tool* t);

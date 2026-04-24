@@ -2,7 +2,7 @@
 #include "../command/createlinecommand.h"
 #include "../command/createpointcommand.h"
 
-LineTool::LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm) : m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
+LineTool::LineTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm, SnapManager* sm) : Tool(sm), m_ctrl(c), m_interaction(im), m_scene(s), m_command(cm) {}
 
 LineType LineTool::lineType() {
     return m_lineType;
@@ -39,9 +39,10 @@ void LineTool::resetTool() {
 }
 
 void LineTool::mousePress(const QPointF &pos) {
-    GraphicsPoint* p = m_interaction->getSnappedPoint(pos);
+    SnapResult res = m_snap->snap(pos);
+    GraphicsPoint* p = res.gp;
     if (!p) {
-        auto cmd = new CreatePointCommand(m_ctrl, pos.x(), pos.y());
+        auto cmd = new CreatePointCommand(m_ctrl, res.pos.x(), res.pos.y());
         m_command->execute(cmd);
         p = cmd->getResultGraphicsObject();
     }
@@ -53,8 +54,8 @@ void LineTool::mousePress(const QPointF &pos) {
         pen.setColor(Qt::gray);
         pen.setWidth(2);
 
-        m_preview = new InfiniteLineItem(m_lineType);
-        m_preview->setLine(QLineF(pos, pos));
+        Point* a = new Point(pos.x(), pos.y());
+        m_preview = new GraphicsLine(new Line(a, a), m_lineType, m_scene);
         m_preview->setPen(pen);
         m_scene->addItem(m_preview);
 
@@ -79,9 +80,9 @@ void LineTool::mouseMove(const QPointF& pos) {
     if (!m_first || !m_preview) return;
 
     QPointF target = pos;
-    GraphicsPoint* snap = m_interaction->getSnappedPoint(pos);
-    if (snap) {
-        target = QPointF(snap->model()->x(), snap->model()->y());
+    SnapResult res = m_snap->snap(pos);
+    if (res.gp) {
+        target = res.pos;
     }
 
     m_preview->setLine(QLineF(QPointF(m_first->model()->x(), m_first->model()->y()), target));

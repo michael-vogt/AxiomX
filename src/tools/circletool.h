@@ -17,7 +17,7 @@ private:
     QGraphicsEllipseItem* m_preview = nullptr;
 
 public:
-    CircleTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm);
+    CircleTool(SceneController* c, InteractionManager* im, QGraphicsScene* s, CommandManager* cm, SnapManager* sm);
 
     void resetTool() override;
 

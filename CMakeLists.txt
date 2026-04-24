@@ -38,7 +38,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/command/createlinecommand.h
         src/command/movepointcommand.h
         src/command/resultcommand.h
-        src/core/infinitelineitem.h
+
         src/tools/circletool.h
         src/view/graphicscircle.h
         src/command/createcirclecommand.h
@@ -61,7 +61,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/tools/tool.cpp
         src/core/circle.cpp
         src/core/geoobject.cpp
-        src/core/infinitelineitem.cpp
+
         src/core/line.cpp
         src/core/point.cpp
         src/core/utility.cpp

@@ -12,6 +12,14 @@ GeoView::GeoView(QGraphicsScene* s, CommandManager* cmd, SceneController* c) : Q
     m_snap = new SnapManager(m_ctrl);
 }
 
+SnapManager* GeoView::snapManager() {
+    return m_snap;
+}
+
+void GeoView::setSnapManager(SnapManager* sm) {
+    m_snap = sm;
+}
+
 Tool* GeoView::tool() {
     return m_tool;
 }

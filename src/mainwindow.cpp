@@ -17,11 +17,16 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     m_view->setInteractionManager(interaction);
     setCentralWidget(m_view);
 
-    PointTool* pointTool = new PointTool(controller, commandManager);
-    LineTool* lineTool = new LineTool(controller, interaction, scene, commandManager);
+    SnapManager* snapManager = m_view->snapManager();
+    if (!snapManager) {
+        snapManager = new SnapManager(controller);
+        m_view->setSnapManager(snapManager)        ;
+    }
+    PointTool* pointTool = new PointTool(controller, commandManager, snapManager);
+    LineTool* lineTool = new LineTool(controller, interaction, scene, commandManager, snapManager);
     MoveTool* moveTool = new MoveTool(controller);
     SelectTool* selectTool = new SelectTool(controller, selection, scene);
-    CircleTool* circleTool = new CircleTool(controller, interaction, scene, commandManager);
+    CircleTool* circleTool = new CircleTool(controller, interaction, scene, commandManager, snapManager);
     IntersectionTool* intersectionTool = new IntersectionTool(controller, commandManager);
 
     // Toolbar

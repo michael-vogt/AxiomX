@@ -7,14 +7,14 @@
 
 class SnapManager {
 public:
-    SceneController* ctrl;
+    SceneController* m_ctrl;
 
-    bool snapToGrid = true;
-    bool snapToPoints = true;
-    bool snapToAxes = true;
+    bool m_snapToGrid = true;
+    bool m_snapToPoints = true;
+    bool m_snapToAxes = true;
 
-    double gridSize = 50.0;
-    double snapRadius = 10.0;
+    double m_gridSize = 50.0;
+    double m_snapRadius = 10.0;
 
     SnapManager(SceneController* c);
 

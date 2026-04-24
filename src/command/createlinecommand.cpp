@@ -5,7 +5,7 @@ CreateLineCommand::CreateLineCommand(SceneController* c, GraphicsPoint* a, Graph
 
 void CreateLineCommand::execute() {
     m_line = new Line(m_a->model(), m_b->model());
-    m_gline = new GraphicsLine(m_line, m_ctrl->scene());
+    m_gline = new GraphicsLine(m_line, m_lineType, m_ctrl->scene());
     m_gline->setLineType(m_lineType);
 
     m_ctrl->scene()->addItem(m_gline);

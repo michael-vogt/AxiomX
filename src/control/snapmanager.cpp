@@ -1,46 +1,46 @@
 #include "snapmanager.h"
 #include "../view/graphicspoint.h"
 
-SnapManager::SnapManager(SceneController* c) : ctrl(c) {}
+SnapManager::SnapManager(SceneController* c) : m_ctrl(c) {}
 
 SnapResult SnapManager::snap(const QPointF& input) {
     // Priorität:
     // 1. Punkte
-    // 2. Achsen
-    // 3. Grid
+    // 2. Grid
+    // 3. Achsen
 
     QPointF p = input;
 
     // 🔵 1. Punkte
-    if (snapToPoints) {
-        for (auto g : ctrl->graphics()) {
+    if (m_snapToPoints) {
+        for (auto g : m_ctrl->graphics()) {
             if (auto gp = dynamic_cast<GraphicsPoint*>(g)) {
-                if (QLineF(gp->pos(), input).length() < snapRadius) {
-                    return { gp->pos(), true };
+                if (QLineF(gp->pos(), input).length() < m_snapRadius) {
+                    return { gp, gp->pos(), true };
                 }
             }
         }
     }
 
-    // 🔴 2. Achsen
-    if (snapToAxes) {
-        if (std::abs(input.x()) < snapRadius)
-            return { QPointF(0, input.y()), true };
-
-        if (std::abs(input.y()) < snapRadius)
-            return { QPointF(input.x(), 0), true };
-    }
-
-    // 🔲 3. Grid
-    if (snapToGrid) {
-        double gx = std::round(input.x() / gridSize) * gridSize;
-        double gy = std::round(input.y() / gridSize) * gridSize;
+    // 🔲 2. Grid
+    if (m_snapToGrid) {
+        double gx = std::round(input.x() / m_gridSize) * m_gridSize;
+        double gy = std::round(input.y() / m_gridSize) * m_gridSize;
 
         QPointF gridPoint(gx, gy);
 
-        if (QLineF(gridPoint, input).length() < snapRadius)
-            return { gridPoint, true };
+        if (QLineF(gridPoint, input).length() < m_snapRadius)
+            return { nullptr, gridPoint, true };
     }
 
-    return { input, false };
+    // 🔴 3. Achsen
+    if (m_snapToAxes) {
+        if (std::abs(input.x()) < m_snapRadius)
+            return { nullptr, QPointF(0, input.y()), true };
+
+        if (std::abs(input.y()) < m_snapRadius)
+            return { nullptr, QPointF(input.x(), 0), true };
+    }
+
+    return { nullptr, input, false };
 }
