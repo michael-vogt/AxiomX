@@ -6,6 +6,7 @@
 #include "tools/intersectiontool.h"
 #include "tools/linetool.h"
 #include "tools/movetool.h"
+#include "tools/perpendiculartool.h"
 #include "tools/pointtool.h"
 #include "tools/selecttool.h"
 
@@ -28,6 +29,7 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     SelectTool* selectTool = new SelectTool(controller, selection, scene);
     CircleTool* circleTool = new CircleTool(controller, interaction, scene, commandManager, snapManager);
     IntersectionTool* intersectionTool = new IntersectionTool(controller, commandManager);
+    PerpendicularTool* perpendicularTool = new PerpendicularTool(controller, commandManager, snapManager);
 
     // Toolbar
     QToolBar* toolbar = addToolBar("Tools");
@@ -42,6 +44,7 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     QAction* lineAction = toolbar->addAction(lineTypeToString(lineTool->lineType()));
     QAction* circleAction = toolbar->addAction("Circle");
     QAction* intersectionAction = toolbar->addAction("Intersect");
+    QAction* perpendicularAction = toolbar->addAction("Perpendicular");
 
     selectAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
     moveAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_M));
@@ -49,6 +52,7 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     lineAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
     circleAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_C));
     intersectionAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_I));
+    perpendicularAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_P));
 
     selectAction->setCheckable(true);
     moveAction->setCheckable(true);
@@ -56,6 +60,7 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     lineAction->setCheckable(true);
     circleAction->setCheckable(true);
     intersectionAction->setCheckable(true);
+    perpendicularAction->setCheckable(true);
 
     group->addAction(selectAction);
     group->addAction(moveAction);
@@ -63,6 +68,7 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     group->addAction(lineAction);
     group->addAction(circleAction);
     group->addAction(intersectionAction);
+    group->addAction(perpendicularAction);
 
     // Default Tool
     moveAction->setChecked(true);
@@ -96,6 +102,10 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
 
     connect(intersectionAction, &QAction::triggered, [this, intersectionTool]() {
         m_view->setTool(intersectionTool);
+    });
+
+    connect(perpendicularAction, &QAction::triggered, [this, perpendicularTool]() {
+        m_view->setTool(perpendicularTool);
     });
 
     setWindowTitle("AxiomX");
