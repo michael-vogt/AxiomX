@@ -34,6 +34,7 @@ void GeoView::setInteractionManager(InteractionManager* im) {
 
 void GeoView::keyPressEvent(QKeyEvent* event) {
     if (event->modifiers() & Qt::ControlModifier) {
+        m_ctrlPressed = true;
         if (event->key() == Qt::Key_Z) {
             m_commandManager->undo();
             this->scene()->update();
@@ -59,6 +60,12 @@ void GeoView::keyPressEvent(QKeyEvent* event) {
         viewport()->update();
     }
 
+}
+
+void GeoView::keyReleaseEvent(QKeyEvent* event) {
+    if (event->key() == Qt::Key_Control) {
+        m_ctrlPressed = false;
+    }
 }
 
 void GeoView::mouseMoveEvent(QMouseEvent* event) {
@@ -99,7 +106,7 @@ void GeoView::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void GeoView::mousePressEvent(QMouseEvent* event) {
-    if (event->button() == Qt::MiddleButton) {
+    if (event->button() == Qt::MiddleButton || (event->button() == Qt::LeftButton && m_ctrlPressed)) {
         m_panning = true;
         m_lastMousePos = event->pos();
         setCursor(Qt::ClosedHandCursor);
@@ -118,7 +125,7 @@ void GeoView::mousePressEvent(QMouseEvent* event) {
 }
 
 void GeoView::mouseReleaseEvent(QMouseEvent* event) {
-    if (event->button() == Qt::MiddleButton) {
+    if (event->button() == Qt::MiddleButton || (event->button() == Qt::LeftButton && m_ctrlPressed)) {
         m_panning = false;
         setCursor(Qt::ArrowCursor);
         viewport()->update();

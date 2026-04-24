@@ -22,6 +22,7 @@ private:
     SnapManager* m_snap = nullptr;
     QPointF m_lastSnap;
     bool m_hasSnap = false;
+    bool m_ctrlPressed = false;
 
 public:
 
@@ -39,6 +40,8 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
+
+    void keyReleaseEvent(QKeyEvent* event) override;
 
     void mouseMoveEvent(QMouseEvent* event) override;
 

@@ -46,13 +46,13 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     QAction* intersectionAction = toolbar->addAction("Intersect");
     QAction* perpendicularAction = toolbar->addAction("Perpendicular");
 
-    selectAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
-    moveAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_M));
+    selectAction->setShortcut(QKeySequence(Qt::Key_Space));
+    moveAction->setShortcut(QKeySequence(Qt::Key_M));
     pointAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_P));
-    lineAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
-    circleAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_C));
-    intersectionAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_I));
-    perpendicularAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_P));
+    lineAction->setShortcut(QKeySequence(Qt::Key_L));
+    circleAction->setShortcut(QKeySequence(Qt::Key_C));
+    intersectionAction->setShortcut(QKeySequence(Qt::Key_I));
+    perpendicularAction->setShortcut(QKeySequence(Qt::Key_P));
 
     selectAction->setCheckable(true);
     moveAction->setCheckable(true);
@@ -71,8 +71,8 @@ MainWindow::MainWindow(SceneController* controller, InteractionManager* interact
     group->addAction(perpendicularAction);
 
     // Default Tool
-    moveAction->setChecked(true);
-    m_view->setTool(moveTool);
+    selectAction->setChecked(true);
+    m_view->setTool(selectTool);
 
     // 🔥 Verbindungen
     connect(selectAction, &QAction::triggered, [this, selectTool]() {
